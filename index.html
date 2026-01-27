@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OPG Oršulić - Neretva Valley Family Farm</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fafafa;
+            scroll-behavior: smooth;
+        }
+
+        /* Scroll Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, #388e3c 0%, #66bb6a 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.15);
+            transition: padding 0.3s, box-shadow 0.3s;
+        }
+
+        header.scrolled {
+            padding: 0.5rem 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: transform 0.3s;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: white;
+            padding: 5px;
+            transition: transform 0.3s;
+        }
+
+        .logo:hover img {
+            transform: rotate(360deg);
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 1.3rem;
+            }
+            
+            .logo img {
+                width: 45px;
+                height: 45px;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .logo img {
+                width: 70px;
+                height: 70px;
+            }
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                right: -100%;
+                width: 250px;
+                height: calc(100vh - 70px);
+                background: linear-gradient(135deg, #388e3c 0%, #66bb6a 100%);
+                flex-direction: column;
+                padding: 2rem;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.2);
+                transition: right 0.3s ease;
+                z-index: 999;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+                padding: 1rem 0;
+                border-bottom: 1px solid rgba(255,255,255,0.2);
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 70px;
+            height: 90vh;
+            background: linear-gradient(rgba(44, 95, 45, 0.4), rgba(151, 201, 61, 0.3)), url('images/opg2.jpeg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: #ff9800;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 152, 0, 0.6);
+        }
+
+        /* Section Styling */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #2c5f2d;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: #ff9800;
+            margin: 1rem auto;
+            border-radius: 2px;
+        }
+
+        /* About Section */
+        #about {
+            background: linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)), url('images/opg1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .about-text h3 {
+            color: #2c5f2d;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .about-image {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Product Showcase */
+        .product-hero {
+            background: linear-gradient(135deg, #ffa726 0%, #ffca28 100%);
+            padding: 4rem 2rem;
+            border-radius: 20px;
+            color: white;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 40px rgba(255, 152, 0, 0.3);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .product-info h3 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-features {
+            list-style: none;
+            margin: 2rem 0;
+        }
+
+        .product-features li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            font-size: 1.1rem;
+        }
+
+        .product-features li:before {
+            content: '✓ ';
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .product-image-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .product-image {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Gallery */
+        #gallery {
+            background: white;
+        }
+
+        .gallery-container {
+            position: relative;
+            max-width: 1200px;
+            margin: 3rem auto;
+            overflow: hidden;
+        }
+
+        .gallery-slider {
+            display: flex;
+            transition: transform 0.5s ease;
+            gap: 2rem;
+        }
+
+        .gallery-item {
+            min-width: calc(33.333% - 1.5rem);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            flex-shrink: 0;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .gallery-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 152, 0, 0.9);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 10;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gallery-arrow:hover {
+            background: rgba(255, 152, 0, 1);
+        }
+
+        .gallery-arrow.left {
+            left: 1rem;
+        }
+
+        .gallery-arrow.right {
+            right: 1rem;
+        }
+
+        .gallery-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        .gallery-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ccc;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .gallery-dot.active {
+            background: #ff9800;
+        }
+
+        /* Health Benefits Box */
+        .health-benefits {
+            background: linear-gradient(135deg, #2c5f2d 0%, #388e3c 100%);
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            margin: 3rem auto;
+            max-width: 1000px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(44, 95, 45, 0.3);
+        }
+
+        .health-benefits h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .health-benefits p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+
+        .health-benefits strong {
+            color: #ffc107;
+            font-size: 1.3rem;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .gallery-item {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        /* Video Section */
+        .video-section {
+            background: linear-gradient(to bottom, #ffffff 0%, #f0f8f0 100%);
+            padding: 5rem 2rem;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            justify-items: center;
+        }
+
+        .video-container {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .video-container iframe {
+            border-radius: 10px;
+        }
+
+        /* Contact Section */
+        #contact {
+            background: white;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .contact-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .contact-card h3 {
+            color: #2c5f2d;
+            margin-bottom: 1rem;
+        }
+
+        .contact-card p {
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #2c5f2d;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .about-content,
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                flex-wrap: wrap;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .gallery-item {
+                min-width: 100%;
+            }
+
+            .health-benefits h3 {
+                font-size: 1.5rem;
+            }
+
+            .health-benefits p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="#" class="logo">
+                <img src="images/logo.jpg" alt="OPG Oršulić Logo">
+                OPG Oršulić
+            </a>
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#product">Product</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>OPG Oršulić</h1>
+            <p>From Our Family Farm in Neretva Valley to Your Table</p>
+            <a href="#product" class="cta-button">Discover Our Products</a>
+        </div>
+    </section>
+
+    <section id="about">
+        <h2 class="section-title fade-in">Our Story</h2>
+        <div class="about-content fade-in">
+            <div class="about-text">
+                <h3>Family Tradition Since Generations</h3>
+                <p>We are a family-owned farm nestled in the fertile Neretva Valley, where generations of the Oršulić family have cultivated the land with passion and dedication. Our valley's unique microclimate and rich soil create the perfect conditions for growing exceptional citrus fruits and vegetables.</p>
+                <p>For decades, we've been committed to natural farming practices, producing the finest mandarins, lemons, and handcrafted goods. Every product that leaves our farm carries the authentic taste of Neretva and the care of our family's hands.</p>
+                <p>Our mission is simple: to bring the pure, sun-kissed flavors of the Neretva Valley directly to your table, maintaining the highest standards of quality and sustainability.</p>
+            </div>
+            <div class="about-image">
+                <img src="images/opg1.jpg" alt="OPG Oršulić Family Farm">
+            </div>
+        </div>
+    </section>
+
+    <section id="product">
+        <h2 class="section-title fade-in">Our Signature Product</h2>
+        <div class="product-hero fade-in">
+            <div class="product-grid">
+                <div class="product-info">
+                    <h3>NERETVANSKA Mandarina Juice</h3>
+                    <p>Perfected through years of dedicated production, our mandarin juice represents the culmination of generational expertise and unwavering commitment to quality.</p>
+                    
+                    <ul class="product-features">
+                        <li>100% Pure Mandarin Juice</li>
+                        <li>0% Added Sugar (0% dodatnog šećera)</li>
+                        <li>0% Preservatives (0% konzervansa)</li>
+                        <li>Cold-Pressed from 3-4 kg of Hand-Picked Mandarins per Liter</li>
+                        <li>Harvested at Peak Ripeness</li>
+                        <li>Traditional Production Methods</li>
+                        <li>Available in 1L Bottles</li>
+                    </ul>
+
+                    <p style="margin-top: 1.5rem; font-size: 1.1rem; line-height: 1.8;">
+                        <strong>For Retail Partners:</strong> Our mandarin juice is the result of multi-generational farming expertise combined with modern quality standards. Each batch undergoes rigorous quality control, ensuring consistency and exceptional taste. We offer competitive wholesale pricing, reliable supply chain management, and full traceability from orchard to bottle. Perfect for health-conscious consumers seeking authentic, premium citrus products.
+                    </p>
+                </div>
+                <div class="product-image-grid">
+                    <div class="product-image" style="grid-column: span 2;">
+                        <img src="images/opg3.jpeg" alt="Mandarina Juice Bottle">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery">
+        <h2 class="section-title fade-in">From Our Orchards</h2>
+        
+        <div class="health-benefits fade-in">
+            <h3>🍊 The Neretva Advantage</h3>
+            <p>
+                Mandarins grown in Neretva's unique soil contain <strong>3-4x more polyphenols and antioxidants</strong> than mandarins from any other region. 
+                This exceptional nutrient density is what makes our cold-pressed elixir more powerful, healthier, and richer in authentic taste. 
+                Every bottle captures the pure essence of the Neretva Valley's mineral-rich earth.
+            </p>
+        </div>
+
+        <div class="gallery-container">
+            <button class="gallery-arrow left" onclick="moveGallery(-1)">‹</button>
+            <div class="gallery-slider" id="gallerySlider">
+                <div class="gallery-item">
+                    <img src="images/opg4.jpg" alt="Harvesting Mandarins">
+                </div>
+                <div class="gallery-item">
+                    <img src="images/opg5.jpg" alt="Fresh Mandarin Harvest">
+                </div>
+                <div class="gallery-item">
+                    <img src="images/opg6.jpg" alt="Mandarin Orchards">
+                </div>
+                <div class="gallery-item">
+                    <img src="images/opg7.jpg" alt="Neretva Valley Farm">
+                </div>
+            </div>
+            <button class="gallery-arrow right" onclick="moveGallery(1)">›</button>
+        </div>
+
+        <div class="gallery-dots" id="galleryDots"></div>
+    </section>
+
+    <script>
+        // Gallery Slider Functionality
+        let currentSlide = 0;
+        const slider = document.getElementById('gallerySlider');
+        const items = document.querySelectorAll('.gallery-item');
+        const dotsContainer = document.getElementById('galleryDots');
+        const totalSlides = items.length;
+
+        // Create dots
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('button');
+            dot.className = 'gallery-dot';
+            if (i === 0) dot.classList.add('active');
+            dot.onclick = () => goToSlide(i);
+            dotsContainer.appendChild(dot);
+        }
+
+        function updateDots() {
+            const dots = document.querySelectorAll('.gallery-dot');
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        }
+
+        function moveGallery(direction) {
+            currentSlide += direction;
+            if (currentSlide < 0) currentSlide = totalSlides - 1;
+            if (currentSlide >= totalSlides) currentSlide = 0;
+            updateGallery();
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateGallery();
+        }
+
+        function updateGallery() {
+            const slideWidth = items[0].offsetWidth + 32; // width + gap
+            slider.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
+            updateDots();
+        }
+
+        // Auto-slide every 5 seconds
+        setInterval(() => {
+            moveGallery(1);
+        }, 5000);
+
+        // Update on window resize
+        window.addEventListener('resize', updateGallery);
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                const navLinks = document.getElementById('navLinks');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Header Scroll Effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll Animation - Fade In Elements
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth Scroll for Navigation Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Parallax Effect for Hero Section
+        window.addEventListener('scroll', () => {
+            const hero = document.querySelector('.hero');
+            const scrolled = window.pageYOffset;
+            if (hero && scrolled < window.innerHeight) {
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+
+        // Add hover effects to gallery items
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.05)';
+                this.style.transition = 'transform 0.3s ease';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+            });
+        });
+
+        // Add animation to CTA button
+        const ctaButton = document.querySelector('.cta-button');
+        if (ctaButton) {
+            setInterval(() => {
+                ctaButton.style.animation = 'pulse 1s';
+                setTimeout(() => {
+                    ctaButton.style.animation = '';
+                }, 1000);
+            }, 5000);
+        }
+
+        // Add CSS animation for pulse effect
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pulse {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Loading animation
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.transition = 'opacity 0.5s';
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+
+        // Touch swipe for gallery on mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        slider.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        slider.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                moveGallery(1); // Swipe left
+            }
+            if (touchEndX > touchStartX + 50) {
+                moveGallery(-1); // Swipe right
+            }
+        }
+    </script>
+
+    <div class="video-section">
+        <h2 class="section-title">See Our Work</h2>
+        <div class="video-grid">
+            <div class="video-container">
+                <iframe src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1526241581450995%2F&show_text=false&width=267&t=0" width="267" height="476" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
+            </div>
+            <div class="video-container">
+                <iframe src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1144217230494617%2F&show_text=false&width=267&t=0" width="267" height="476" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
+            </div>
+            <div class="video-container">
+                <iframe src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2F100088117370199%2Fvideos%2F3952018021699675%2F&show_text=false&width=267&t=0" width="267" height="476" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <section id="contact">
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="contact-info">
+            <div class="contact-card">
+                <h3>📍 Location</h3>
+                <p>Neretva Valley, Croatia</p>
+            </div>
+            <div class="contact-card">
+                <h3>🌐 Website</h3>
+                <p><a href="http://www.opg-orsulic.hr" style="color: #2c5f2d; text-decoration: none;">www.opg-orsulic.hr</a></p>
+            </div>
+            <div class="contact-card">
+                <h3>📧 Contact us </h3>
+                <p> 
+                    For wholesale inquiries and partnerships <p>+385977511139
+                </p></p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 OPG Oršulić - Family Farm | Neretva Valley, Croatia</p>
+        <p>Bringing the authentic taste of Neretva to your table 😊</p>
+    </footer>
+</body>
+</html>
