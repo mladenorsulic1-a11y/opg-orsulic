@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OPG Oršulić - Neretva Valley Family Farm</title>
+    <title>OPG Oršulić - Neretva Valley Family Agricultural Holding</title>
     <style>
         * {
             margin: 0;
@@ -86,24 +86,6 @@
             transform: rotate(360deg);
         }
 
-        @media (max-width: 768px) {
-            .logo {
-                font-size: 1.3rem;
-            }
-            
-            .logo img {
-                width: 45px;
-                height: 45px;
-            }
-        }
-
-        @media (min-width: 1200px) {
-            .logo img {
-                width: 70px;
-                height: 70px;
-            }
-        }
-
         .nav-links {
             display: flex;
             list-style: none;
@@ -132,6 +114,15 @@
         }
 
         @media (max-width: 768px) {
+            .logo {
+                font-size: 1.3rem;
+            }
+            
+            .logo img {
+                width: 45px;
+                height: 45px;
+            }
+
             .mobile-menu-toggle {
                 display: block;
             }
@@ -159,6 +150,13 @@
                 text-align: center;
                 padding: 1rem 0;
                 border-bottom: 1px solid rgba(255,255,255,0.2);
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .logo img {
+                width: 70px;
+                height: 70px;
             }
         }
 
@@ -195,6 +193,13 @@
         .hero p {
             font-size: 1.3rem;
             margin-bottom: 2rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            opacity: 0.95;
         }
 
         .cta-button {
@@ -240,9 +245,9 @@
             border-radius: 2px;
         }
 
-        /* About Section */
+        /* About Section - FIXED FOR READABILITY */
         #about {
-            background: linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)), url('images/opg1.jpg');
+            background: linear-gradient(rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.98)), url('images/opg1.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -252,30 +257,108 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 3rem;
-            align-items: center;
+            align-items: start;
         }
 
         .about-text {
             font-size: 1.1rem;
-            line-height: 1.8;
+            line-height: 1.9;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
         }
 
         .about-text h3 {
             color: #2c5f2d;
-            margin-bottom: 1rem;
-            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            text-shadow: none;
+            font-weight: 700;
+        }
+
+        .about-text p {
+            color: #2d2d2d;
+            margin-bottom: 1.2rem;
+            text-shadow: none;
         }
 
         .about-image {
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 100px;
         }
 
         .about-image img {
             width: 100%;
             height: auto;
             display: block;
+        }
+
+        /* Certifications Section */
+        .certifications {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .cert-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            max-width: 1000px;
+            margin: 2rem auto;
+            flex-wrap: wrap;
+        }
+
+        .cert-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .cert-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .cert-item img {
+            max-width: 250px;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .cert-item h4 {
+            margin-top: 1rem;
+            color: #2c5f2d;
+            font-size: 1.2rem;
+        }
+
+        .pdf-download {
+            margin-top: 2rem;
+        }
+
+        .pdf-download a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: #2c5f2d;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 15px rgba(44, 95, 45, 0.3);
+        }
+
+        .pdf-download a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(44, 95, 45, 0.5);
         }
 
         /* Product Showcase */
@@ -345,6 +428,7 @@
             max-width: 1200px;
             margin: 3rem auto;
             overflow: hidden;
+            padding: 0 60px;
         }
 
         .gallery-slider {
@@ -354,17 +438,23 @@
         }
 
         .gallery-item {
-            min-width: calc(33.333% - 1.5rem);
+            min-width: calc((100% - 4rem) / 3);
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
             flex-shrink: 0;
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
         }
 
         .gallery-item img {
             width: 100%;
-            height: 300px;
+            height: 350px;
             object-fit: cover;
+            display: block;
         }
 
         .gallery-arrow {
@@ -446,30 +536,6 @@
             font-size: 1.3rem;
         }
 
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .gallery-item {
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-        }
-
-        .gallery-item:hover {
-            transform: translateY(-10px);
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-        }
-
         /* Video Section */
         .video-section {
             background: linear-gradient(to bottom, #ffffff 0%, #f0f8f0 100%);
@@ -526,6 +592,17 @@
 
         .contact-card p {
             font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-card a {
+            color: #2c5f2d;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .contact-card a:hover {
+            opacity: 0.7;
         }
 
         /* Footer */
@@ -536,20 +613,31 @@
             padding: 2rem;
         }
 
+        footer p {
+            margin: 0.5rem 0;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2rem;
             }
 
-            .about-content,
-            .product-grid {
+            .about-content {
                 grid-template-columns: 1fr;
             }
 
-            .nav-links {
-                gap: 1rem;
-                flex-wrap: wrap;
+            .about-text {
+                padding: 2rem;
+            }
+
+            .about-image {
+                position: relative;
+                top: 0;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
             }
 
             .section-title {
@@ -567,20 +655,28 @@
             .health-benefits p {
                 font-size: 1rem;
             }
+
+            .cert-container {
+                gap: 2rem;
+            }
+
+            .cert-item img {
+                max-width: 200px;
+            }
         }
     </style>
 </head>
-<body>
-    <header>
+<body>    <header>
         <nav>
             <a href="#" class="logo">
-                <img src="images/logo.jpg" alt="OPG Oršulić Logo">
+                <img src="images/logo2.png" alt="OPG Oršulić Logo">
                 OPG Oršulić
             </a>
             <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
+                <li><a href="#certifications">Certifications</a></li>
                 <li><a href="#product">Product</a></li>
                 <li><a href="#gallery">Gallery</a></li>
                 <li><a href="#contact">Contact</a></li>
@@ -591,6 +687,7 @@
     <section id="home" class="hero">
         <div class="hero-content">
             <h1>OPG Oršulić</h1>
+            <p class="hero-subtitle">Family Agricultural Holding</p>
             <p>From Our Family Farm in Neretva Valley to Your Table</p>
             <a href="#product" class="cta-button">Discover Our Products</a>
         </div>
@@ -608,6 +705,25 @@
             <div class="about-image">
                 <img src="images/opg1.jpg" alt="OPG Oršulić Family Farm">
             </div>
+        </div>
+    </section>
+
+    <section id="certifications" class="certifications">
+        <h2 class="section-title fade-in">Our Certifications</h2>
+        <p style="max-width: 800px; margin: 0 auto 2rem; font-size: 1.1rem; color: #555;">
+            Our Neretvanska Mandarina is officially recognized and protected by the European Union as a product of unique quality and geographical origin.
+        </p>
+        <div class="cert-container fade-in">
+            <div class="cert-item">
+                <img src="images/ZOI_plakat_3.png" alt="ZOI - Protected Designation of Origin">
+                <h4>EU Protected Designation of Origin (PDO)</h4>
+                <p style="margin-top: 0.5rem; color: #666;">Registered in EU Regulation 2015/1150</p>
+            </div>
+        </div>
+        <div class="pdf-download">
+            <a href="EU_Regulation_2015_1150.pdf" target="_blank" download>
+                📄 Download Official EU Regulation Document
+            </a>
         </div>
     </section>
 
@@ -676,15 +792,53 @@
         <div class="gallery-dots" id="galleryDots"></div>
     </section>
 
+    <div class="video-section">
+        <h2 class="section-title">See Our Work</h2>
+        <div class="video-grid">
+            <div class="video-container">
+                <iframe src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1526241581450995%2F&show_text=false&width=267&t=0" width="267" height="476" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
+            </div>
+            <div class="video-container">
+                <iframe src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1144217230494617%2F&show_text=false&width=267&t=0" width="267" height="476" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
+            </div>
+            <div class="video-container">
+                <iframe src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2F100088117370199%2Fvideos%2F3952018021699675%2F&show_text=false&width=267&t=0" width="267" height="476" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <section id="contact">
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="contact-info">
+            <div class="contact-card">
+                <h3>📍 Location</h3>
+                <p>Neretva Valley, Croatia</p>
+            </div>
+            <div class="contact-card">
+                <h3>🌐 Website</h3>
+                <p><a href="http://www.opg-orsulic.hr">www.opg-orsulic.hr</a></p>
+            </div>
+            <div class="contact-card">
+                <h3>📧 Contact</h3>
+                <p><a href="mailto:prodaja@opg-orsulic.hr">prodaja@opg-orsulic.hr</a></p>
+                <p><a href="tel:+385976017599">+385 97 601 7599</a></p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 OPG Oršulić - Family Agricultural Holding | Neretva Valley, Croatia</p>
+        <p>Bringing the authentic taste of Neretva to your table 😊</p>
+    </footer>
+
     <script>
-        // Gallery Slider Functionality
+        // Gallery Slider
         let currentSlide = 0;
         const slider = document.getElementById('gallerySlider');
         const items = document.querySelectorAll('.gallery-item');
         const dotsContainer = document.getElementById('galleryDots');
         const totalSlides = items.length;
 
-        // Create dots
         for (let i = 0; i < totalSlides; i++) {
             const dot = document.createElement('button');
             dot.className = 'gallery-dot';
@@ -713,77 +867,53 @@
         }
 
         function updateGallery() {
-            const slideWidth = items[0].offsetWidth + 32; // width + gap
+            if (items.length === 0) return;
+            const containerWidth = slider.parentElement.offsetWidth - 120;
+            const itemWidth = (containerWidth - 32) / 3;
+            const slideWidth = itemWidth + 32;
             slider.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
             updateDots();
         }
 
-        // Auto-slide every 5 seconds
-        setInterval(() => {
-            moveGallery(1);
-        }, 5000);
-
-        // Update on window resize
+        // Auto-slide disabled - use arrows or dots to navigate
         window.addEventListener('resize', updateGallery);
 
-        // Mobile Menu Toggle
+        // Mobile Menu
         function toggleMobileMenu() {
-            const navLinks = document.getElementById('navLinks');
-            navLinks.classList.toggle('active');
+            document.getElementById('navLinks').classList.toggle('active');
         }
 
-        // Close mobile menu when clicking on a link
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
-                const navLinks = document.getElementById('navLinks');
-                navLinks.classList.remove('active');
+                document.getElementById('navLinks').classList.remove('active');
             });
         });
 
-        // Header Scroll Effect
+        // Header Scroll
         window.addEventListener('scroll', () => {
             const header = document.querySelector('header');
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
+            header.classList.toggle('scrolled', window.scrollY > 50);
         });
 
-        // Scroll Animation - Fade In Elements
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
+        // Scroll Animation
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
+                if (entry.isIntersecting) entry.target.classList.add('visible');
             });
-        }, observerOptions);
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
-        // Observe all fade-in elements
-        document.querySelectorAll('.fade-in').forEach(el => {
-            observer.observe(el);
-        });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-        // Smooth Scroll for Navigation Links
+        // Smooth Scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
         });
 
-        // Parallax Effect for Hero Section
+        // Parallax
         window.addEventListener('scroll', () => {
             const hero = document.querySelector('.hero');
             const scrolled = window.pageYOffset;
@@ -792,40 +922,27 @@
             }
         });
 
-        // Add hover effects to gallery items
+        // Gallery hover
         document.querySelectorAll('.gallery-item').forEach(item => {
             item.addEventListener('mouseenter', function() {
                 this.style.transform = 'scale(1.05)';
                 this.style.transition = 'transform 0.3s ease';
             });
-            
             item.addEventListener('mouseleave', function() {
                 this.style.transform = 'scale(1)';
             });
         });
 
-        // Add animation to CTA button
-        const ctaButton = document.querySelector('.cta-button');
-        if (ctaButton) {
-            setInterval(() => {
-                ctaButton.style.animation = 'pulse 1s';
-                setTimeout(() => {
-                    ctaButton.style.animation = '';
-                }, 1000);
-            }, 5000);
-        }
+        // Touch swipe
+        let touchStartX = 0, touchEndX = 0;
+        slider.addEventListener('touchstart', (e) => touchStartX = e.changedTouches[0].screenX);
+        slider.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            if (touchEndX < touchStartX - 50) moveGallery(1);
+            if (touchEndX > touchStartX + 50) moveGallery(-1);
+        });
 
-        // Add CSS animation for pulse effect
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes pulse {
-                0%, 100% { transform: scale(1); }
-                50% { transform: scale(1.05); }
-            }
-        `;
-        document.head.appendChild(style);
-
-        // Loading animation
+        // Page load animation
         window.addEventListener('load', () => {
             document.body.style.opacity = '0';
             setTimeout(() => {
@@ -833,68 +950,6 @@
                 document.body.style.opacity = '1';
             }, 100);
         });
-
-        // Touch swipe for gallery on mobile
-        let touchStartX = 0;
-        let touchEndX = 0;
-
-        slider.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-        });
-
-        slider.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        });
-
-        function handleSwipe() {
-            if (touchEndX < touchStartX - 50) {
-                moveGallery(1); // Swipe left
-            }
-            if (touchEndX > touchStartX + 50) {
-                moveGallery(-1); // Swipe right
-            }
-        }
     </script>
-
-    <div class="video-section">
-        <h2 class="section-title">See Our Work</h2>
-        <div class="video-grid">
-            <div class="video-container">
-                <iframe src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1526241581450995%2F&show_text=false&width=267&t=0" width="267" height="476" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
-            </div>
-            <div class="video-container">
-                <iframe src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1144217230494617%2F&show_text=false&width=267&t=0" width="267" height="476" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
-            </div>
-            <div class="video-container">
-                <iframe src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2F100088117370199%2Fvideos%2F3952018021699675%2F&show_text=false&width=267&t=0" width="267" height="476" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
-            </div>
-        </div>
-    </div>
-
-    <section id="contact">
-        <h2 class="section-title">Get In Touch</h2>
-        <div class="contact-info">
-            <div class="contact-card">
-                <h3>📍 Location</h3>
-                <p>Neretva Valley, Croatia</p>
-            </div>
-            <div class="contact-card">
-                <h3>🌐 Website</h3>
-                <p><a href="http://www.opg-orsulic.hr" style="color: #2c5f2d; text-decoration: none;">www.opg-orsulic.hr</a></p>
-            </div>
-            <div class="contact-card">
-                <h3>📧 Contact us </h3>
-                <p> 
-                    For wholesale inquiries and partnerships <p>+385977511139
-                </p></p>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <p>&copy; 2026 OPG Oršulić - Family Farm | Neretva Valley, Croatia</p>
-        <p>Bringing the authentic taste of Neretva to your table 😊</p>
-    </footer>
 </body>
 </html>
