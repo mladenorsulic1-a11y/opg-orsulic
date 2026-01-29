@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,6 +17,37 @@
             color: #333;
             background: #fafafa;
             scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        /* Language Switcher */
+        .language-switcher {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .lang-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        .lang-btn.active {
+            background: white;
+            color: #388e3c;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
 
         /* Scroll Animation */
@@ -31,6 +62,28 @@
             transform: translateY(0);
         }
 
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s ease;
+        }
+
+        .slide-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.8s ease;
+        }
+
+        .slide-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
         /* Header & Navigation */
         header {
             background: linear-gradient(135deg, #388e3c 0%, #66bb6a 100%);
@@ -41,12 +94,13 @@
             top: 0;
             z-index: 1000;
             box-shadow: 0 2px 15px rgba(0,0,0,0.15);
-            transition: padding 0.3s, box-shadow 0.3s;
+            transition: padding 0.3s, box-shadow 0.3s, background 0.3s;
         }
 
         header.scrolled {
             padding: 0.5rem 0;
             box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+            background: linear-gradient(135deg, #2c5f2d 0%, #388e3c 100%);
         }
 
         nav {
@@ -56,6 +110,12 @@
             justify-content: space-between;
             align-items: center;
             padding: 0 2rem;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
         }
 
         .logo {
@@ -79,7 +139,7 @@
             border-radius: 50%;
             background: white;
             padding: 5px;
-            transition: transform 0.3s;
+            transition: transform 0.5s;
         }
 
         .logo:hover img {
@@ -90,17 +150,34 @@
             display: flex;
             list-style: none;
             gap: 2rem;
+            align-items: center;
         }
 
         .nav-links a {
             color: white;
             text-decoration: none;
             font-weight: 500;
-            transition: opacity 0.3s;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: white;
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
         }
 
         .nav-links a:hover {
-            opacity: 0.8;
+            transform: translateY(-2px);
         }
 
         .mobile-menu-toggle {
@@ -111,6 +188,11 @@
             font-size: 1.8rem;
             cursor: pointer;
             padding: 0.5rem;
+            transition: transform 0.3s;
+        }
+
+        .mobile-menu-toggle:active {
+            transform: scale(0.9);
         }
 
         @media (max-width: 768px) {
@@ -131,14 +213,15 @@
                 position: fixed;
                 top: 70px;
                 right: -100%;
-                width: 250px;
+                width: 280px;
                 height: calc(100vh - 70px);
                 background: linear-gradient(135deg, #388e3c 0%, #66bb6a 100%);
                 flex-direction: column;
                 padding: 2rem;
-                box-shadow: -5px 0 15px rgba(0,0,0,0.2);
-                transition: right 0.3s ease;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+                transition: right 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
                 z-index: 999;
+                overflow-y: auto;
             }
 
             .nav-links.active {
@@ -150,6 +233,38 @@
                 text-align: center;
                 padding: 1rem 0;
                 border-bottom: 1px solid rgba(255,255,255,0.2);
+                animation: slideInRight 0.3s ease forwards;
+                opacity: 0;
+            }
+
+            .nav-links.active li {
+                animation: slideInRight 0.3s ease forwards;
+            }
+
+            .nav-links.active li:nth-child(1) { animation-delay: 0.1s; }
+            .nav-links.active li:nth-child(2) { animation-delay: 0.2s; }
+            .nav-links.active li:nth-child(3) { animation-delay: 0.3s; }
+            .nav-links.active li:nth-child(4) { animation-delay: 0.4s; }
+            .nav-links.active li:nth-child(5) { animation-delay: 0.5s; }
+            .nav-links.active li:nth-child(6) { animation-delay: 0.6s; }
+            .nav-links.active li:nth-child(7) { animation-delay: 0.7s; }
+
+            @keyframes slideInRight {
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+                from {
+                    opacity: 0;
+                    transform: translateX(20px);
+                }
+            }
+
+            .language-switcher {
+                margin-top: 2rem;
+                justify-content: center;
+                padding-top: 1rem;
+                border-top: 1px solid rgba(255,255,255,0.3);
             }
         }
 
@@ -182,12 +297,30 @@
             backdrop-filter: blur(10px);
             border-radius: 20px;
             border: 2px solid rgba(255, 255, 255, 0.3);
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .hero h1 {
             font-size: 3.5rem;
             margin-bottom: 1rem;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            animation: titlePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes titlePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
         }
 
         .hero p {
@@ -211,8 +344,28 @@
             border-radius: 50px;
             font-weight: bold;
             font-size: 1.1rem;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: all 0.3s;
             box-shadow: 0 4px 15px rgba(255, 152, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .cta-button:hover::before {
+            width: 300px;
+            height: 300px;
         }
 
         .cta-button:hover {
@@ -240,12 +393,18 @@
             display: block;
             width: 100px;
             height: 4px;
-            background: #ff9800;
+            background: linear-gradient(90deg, #ff9800, #ffc107);
             margin: 1rem auto;
             border-radius: 2px;
+            animation: expandWidth 0.8s ease;
         }
 
-        /* About Section - FIXED FOR READABILITY */
+        @keyframes expandWidth {
+            from { width: 0; }
+            to { width: 100px; }
+        }
+
+        /* About Section */
         #about {
             background: linear-gradient(rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.98)), url('images/opg1.jpg');
             background-size: cover;
@@ -289,6 +448,11 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             position: sticky;
             top: 100px;
+            transition: transform 0.3s;
+        }
+
+        .about-image:hover {
+            transform: scale(1.02);
         }
 
         .about-image img {
@@ -319,17 +483,23 @@
             padding: 2rem;
             border-radius: 15px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
+            transition: all 0.3s;
         }
 
         .cert-item:hover {
-            transform: translateY(-10px);
+            transform: translateY(-10px) rotate(2deg);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
         }
 
         .cert-item img {
             max-width: 250px;
             height: auto;
             border-radius: 10px;
+            transition: transform 0.3s;
+        }
+
+        .cert-item:hover img {
+            transform: scale(1.05);
         }
 
         .cert-item h4 {
@@ -352,12 +522,12 @@
             text-decoration: none;
             border-radius: 50px;
             font-weight: 600;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: all 0.3s;
             box-shadow: 0 4px 15px rgba(44, 95, 45, 0.3);
         }
 
         .pdf-download a:hover {
-            transform: translateY(-3px);
+            transform: translateY(-3px) scale(1.05);
             box-shadow: 0 6px 20px rgba(44, 95, 45, 0.5);
         }
 
@@ -392,17 +562,36 @@
             padding: 0.8rem 0;
             border-bottom: 1px solid rgba(255,255,255,0.3);
             font-size: 1.1rem;
+            transform: translateX(-20px);
+            opacity: 0;
+            animation: slideInFeature 0.5s ease forwards;
+        }
+
+        .product-features li:nth-child(1) { animation-delay: 0.1s; }
+        .product-features li:nth-child(2) { animation-delay: 0.2s; }
+        .product-features li:nth-child(3) { animation-delay: 0.3s; }
+        .product-features li:nth-child(4) { animation-delay: 0.4s; }
+        .product-features li:nth-child(5) { animation-delay: 0.5s; }
+        .product-features li:nth-child(6) { animation-delay: 0.6s; }
+        .product-features li:nth-child(7) { animation-delay: 0.7s; }
+
+        @keyframes slideInFeature {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
         .product-features li:before {
             content: '✓ ';
             font-weight: bold;
             margin-right: 0.5rem;
+            color: #4caf50;
         }
 
         .product-image-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
             gap: 1rem;
         }
 
@@ -410,12 +599,18 @@
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            transition: transform 0.3s;
+        }
+
+        .product-image:hover {
+            transform: scale(1.05);
         }
 
         .product-image img {
             width: 100%;
-            height: 100%;
+            height: auto;
             object-fit: cover;
+            display: block;
         }
 
         /* Gallery */
@@ -428,12 +623,12 @@
             max-width: 1200px;
             margin: 3rem auto;
             overflow: hidden;
-            padding: 0 60px;
+            padding: 0 70px;
         }
 
         .gallery-slider {
             display: flex;
-            transition: transform 0.5s ease;
+            transition: transform 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
             gap: 2rem;
         }
 
@@ -443,11 +638,13 @@
             overflow: hidden;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
             flex-shrink: 0;
-            transition: transform 0.3s;
+            transition: all 0.3s;
+            cursor: pointer;
         }
 
         .gallery-item:hover {
-            transform: scale(1.05);
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
         }
 
         .gallery-item img {
@@ -455,6 +652,11 @@
             height: 350px;
             object-fit: cover;
             display: block;
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
         }
 
         .gallery-arrow {
@@ -470,7 +672,7 @@
             font-size: 1.5rem;
             cursor: pointer;
             z-index: 10;
-            transition: background 0.3s;
+            transition: all 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -478,14 +680,19 @@
 
         .gallery-arrow:hover {
             background: rgba(255, 152, 0, 1);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .gallery-arrow:active {
+            transform: translateY(-50%) scale(0.95);
         }
 
         .gallery-arrow.left {
-            left: 1rem;
+            left: 10px;
         }
 
         .gallery-arrow.right {
-            right: 1rem;
+            right: 10px;
         }
 
         .gallery-dots {
@@ -502,11 +709,17 @@
             background: #ccc;
             border: none;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: all 0.3s;
+        }
+
+        .gallery-dot:hover {
+            transform: scale(1.3);
+            background: #ff9800;
         }
 
         .gallery-dot.active {
             background: #ff9800;
+            transform: scale(1.2);
         }
 
         /* Health Benefits Box */
@@ -559,6 +772,12 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            transition: transform 0.3s;
+        }
+
+        .video-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
         .video-container iframe {
@@ -583,6 +802,12 @@
             border-radius: 15px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
             text-align: center;
+            transition: all 0.3s;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-10px) rotate(1deg);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
         }
 
         .contact-card h3 {
@@ -598,11 +823,13 @@
         .contact-card a {
             color: #2c5f2d;
             text-decoration: none;
-            transition: opacity 0.3s;
+            transition: all 0.3s;
         }
 
         .contact-card a:hover {
-            opacity: 0.7;
+            color: #ff9800;
+            transform: scale(1.05);
+            display: inline-block;
         }
 
         /* Footer */
@@ -617,14 +844,53 @@
             margin: 0.5rem 0;
         }
 
-        /* Responsive */
+        /* Scroll to Top Button */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: #ff9800;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.4);
+            transition: all 0.3s;
+            z-index: 999;
+        }
+
+        .scroll-to-top.visible {
+            display: flex;
+        }
+
+        .scroll-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(255, 152, 0, 0.6);
+        }
+
+        /* Responsive - ENHANCED */
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2rem;
             }
 
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .hero-content {
+                padding: 1.5rem;
+            }
+
             .about-content {
                 grid-template-columns: 1fr;
+                gap: 2rem;
             }
 
             .about-text {
@@ -636,7 +902,30 @@
                 top: 0;
             }
 
+            /* FIXED PRODUCT SECTION FOR MOBILE */
             .product-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .product-info {
+                order: 1;
+            }
+
+            .product-info h3 {
+                font-size: 1.8rem;
+            }
+
+            .product-info p {
+                font-size: 1rem;
+            }
+
+            .product-features li {
+                font-size: 0.95rem;
+            }
+
+            .product-image-grid {
+                order: 2;
                 grid-template-columns: 1fr;
             }
 
@@ -644,8 +933,27 @@
                 font-size: 2rem;
             }
 
+            /* FIXED GALLERY FOR MOBILE */
+            .gallery-container {
+                padding: 0 50px;
+            }
+
             .gallery-item {
                 min-width: 100%;
+            }
+
+            .gallery-item img {
+                height: 250px;
+            }
+
+            .gallery-arrow {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .health-benefits {
+                padding: 2rem 1.5rem;
             }
 
             .health-benefits h3 {
@@ -663,23 +971,46 @@
             .cert-item img {
                 max-width: 200px;
             }
+
+            .video-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gallery-container {
+                padding: 0 40px;
+            }
+
+            .gallery-arrow {
+                width: 35px;
+                height: 35px;
+            }
         }
     </style>
 </head>
-<body>    <header>
+<body>
+    <header>
         <nav>
-            <a href="#" class="logo">
-                <img src="images/logo2.png" alt="OPG Oršulić Logo">
-                OPG Oršulić
-            </a>
+            <div class="nav-left">
+                <a href="#" class="logo">
+                    <img src="images/logo.jpg" alt="OPG Oršulić Logo">
+                    OPG Oršulić
+                </a>
+            </div>
             <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
             <ul class="nav-links" id="navLinks">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#certifications">Certifications</a></li>
-                <li><a href="#product">Product</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#home" data-en="Home" data-hr="Početna">Home</a></li>
+                <li><a href="#about" data-en="About" data-hr="O nama">About</a></li>
+                <li><a href="#certifications" data-en="Certifications" data-hr="Certifikati">Certifications</a></li>
+                <li><a href="#product" data-en="Product" data-hr="Proizvod">Product</a></li>
+                <li><a href="#gallery" data-en="Gallery" data-hr="Galerija">Gallery</a></li>
+                <li><a href="#contact" data-en="Contact" data-hr="Kontakt">Contact</a></li>
+                <li class="language-switcher">
+                    <button class="lang-btn active" onclick="switchLanguage('en')">EN</button>
+                    <button class="lang-btn" onclick="switchLanguage('hr')">HR</button>
+                </li>
             </ul>
         </nav>
     </header>
@@ -687,70 +1018,86 @@
     <section id="home" class="hero">
         <div class="hero-content">
             <h1>OPG Oršulić</h1>
-            <p class="hero-subtitle">Family Agricultural Holding</p>
-            <p>From Our Family Farm in Neretva Valley to Your Table</p>
-            <a href="#product" class="cta-button">Discover Our Products</a>
+            <p class="hero-subtitle" data-en="Family Agricultural Holding" data-hr="Obiteljsko Poljoprivredno Gospodarstvo">Family Agricultural Holding</p>
+            <p data-en="From Our Family Farm in Neretva Valley to Your Table" data-hr="Sa Naše Obiteljske Farme u Dolini Neretve na Vaš Stol">From Our Family Farm in Neretva Valley to Your Table</p>
+            <a href="#product" class="cta-button" data-en="Discover Our Products" data-hr="Otkrijte Naše Proizvode">Discover Our Products</a>
         </div>
     </section>
 
     <section id="about">
-        <h2 class="section-title fade-in">Our Story</h2>
-        <div class="about-content fade-in">
-            <div class="about-text">
-                <h3>Family Tradition Since Generations</h3>
-                <p>We are a family-owned farm nestled in the fertile Neretva Valley, where generations of the Oršulić family have cultivated the land with passion and dedication. Our valley's unique microclimate and rich soil create the perfect conditions for growing exceptional citrus fruits and vegetables.</p>
-                <p>For decades, we've been committed to natural farming practices, producing the finest mandarins, lemons, and handcrafted goods. Every product that leaves our farm carries the authentic taste of Neretva and the care of our family's hands.</p>
-                <p>Our mission is simple: to bring the pure, sun-kissed flavors of the Neretva Valley directly to your table, maintaining the highest standards of quality and sustainability.</p>
+        <h2 class="section-title fade-in" data-en="Our Story" data-hr="Naša Priča">Our Story</h2>
+        <div class="about-content">
+            <div class="about-text slide-in-left fade-in">
+                <h3 data-en="Family Tradition Since Generations" data-hr="Obiteljska Tradicija Kroz Generacije">Family Tradition Since Generations</h3>
+                <p data-en="We are a family-owned farm nestled in the fertile Neretva Valley, where generations of the Oršulić family have cultivated the land with passion and dedication. Our valley's unique microclimate and rich soil create the perfect conditions for growing exceptional citrus fruits and vegetables." 
+                   data-hr="Mi smo obiteljska farma smještena u plodnoj dolini Neretve, gdje generacije obitelji Oršulić obrađuju zemlju sa strašću i predanošću. Jedinstvena mikroklima naše doline i bogato tlo stvaraju savršene uvjete za uzgoj izuzetnih citrusa i povrća.">
+                    We are a family-owned farm nestled in the fertile Neretva Valley, where generations of the Oršulić family have cultivated the land with passion and dedication. Our valley's unique microclimate and rich soil create the perfect conditions for growing exceptional citrus fruits and vegetables.
+                </p>
+                <p data-en="For decades, we've been committed to natural farming practices, producing the finest mandarins, lemons, and handcrafted goods. Every product that leaves our farm carries the authentic taste of Neretva and the care of our family's hands."
+                   data-hr="Desetljećima smo predani prirodnim metodama uzgoja, proizvodeći najfinije mandarine, limune i ručno rađene proizvode. Svaki proizvod koji napusti našu farmu nosi autentični okus Neretve i brigu naših obiteljskih ruku.">
+                    For decades, we've been committed to natural farming practices, producing the finest mandarins, lemons, and handcrafted goods. Every product that leaves our farm carries the authentic taste of Neretva and the care of our family's hands.
+                </p>
+                <p data-en="Our mission is simple: to bring the pure, sun-kissed flavors of the Neretva Valley directly to your table, maintaining the highest standards of quality and sustainability."
+                   data-hr="Naša misija je jednostavna: donijeti čiste, suncem poljubljene okuse doline Neretve izravno na vaš stol, održavajući najviše standarde kvalitete i održivosti.">
+                    Our mission is simple: to bring the pure, sun-kissed flavors of the Neretva Valley directly to your table, maintaining the highest standards of quality and sustainability.
+                </p>
             </div>
-            <div class="about-image">
+            <div class="about-image slide-in-right fade-in">
                 <img src="images/opg1.jpg" alt="OPG Oršulić Family Farm">
             </div>
         </div>
     </section>
 
     <section id="certifications" class="certifications">
-        <h2 class="section-title fade-in">Our Certifications</h2>
-        <p style="max-width: 800px; margin: 0 auto 2rem; font-size: 1.1rem; color: #555;">
+        <h2 class="section-title fade-in" data-en="Our Certifications" data-hr="Naši Certifikati">Our Certifications</h2>
+        <p class="fade-in" style="max-width: 800px; margin: 0 auto 2rem; font-size: 1.1rem; color: #555;" 
+           data-en="Our Neretvanska Mandarina is officially recognized and protected by the European Union as a product of unique quality and geographical origin."
+           data-hr="Naša Neretvanska Mandarina je službeno priznata i zaštićena od strane Europske Unije kao proizvod jedinstvene kvalitete i zemljopisnog porijekla.">
             Our Neretvanska Mandarina is officially recognized and protected by the European Union as a product of unique quality and geographical origin.
         </p>
         <div class="cert-container fade-in">
             <div class="cert-item">
                 <img src="images/ZOI_plakat_3.png" alt="ZOI - Protected Designation of Origin">
-                <h4>EU Protected Designation of Origin (PDO)</h4>
-                <p style="margin-top: 0.5rem; color: #666;">Registered in EU Regulation 2015/1150</p>
+                <h4 data-en="EU Protected Designation of Origin (PDO)" data-hr="EU Zaštićena Oznaka Izvornosti (ZOI)">EU Protected Designation of Origin (PDO)</h4>
+                <p style="margin-top: 0.5rem; color: #666;" data-en="Registered in EU Regulation 2015/1150" data-hr="Registrirano u EU Uredbi 2015/1150">Registered in EU Regulation 2015/1150</p>
             </div>
         </div>
-        <div class="pdf-download">
+        <div class="pdf-download fade-in">
             <a href="EU_Regulation_2015_1150.pdf" target="_blank" download>
-                📄 Download Official EU Regulation Document
+                <span data-en="📄 Download Official EU Regulation Document" data-hr="📄 Preuzmite Službeni EU Dokument Uredbe">📄 Download Official EU Regulation Document</span>
             </a>
         </div>
     </section>
 
     <section id="product">
-        <h2 class="section-title fade-in">Our Signature Product</h2>
+        <h2 class="section-title fade-in" data-en="Our Signature Product" data-hr="Naš Prepoznatljivi Proizvod">Our Signature Product</h2>
         <div class="product-hero fade-in">
             <div class="product-grid">
                 <div class="product-info">
-                    <h3>NERETVANSKA Mandarina Juice</h3>
-                    <p>Perfected through years of dedicated production, our mandarin juice represents the culmination of generational expertise and unwavering commitment to quality.</p>
+                    <h3 data-en="NERETVANSKA Mandarin Juice" data-hr="NERETVANSKA Sok od Mandarine">NERETVANSKA Mandarin Juice</h3>
+                    <p data-en="Perfected through years of dedicated production, our mandarin juice represents the culmination of generational expertise and unwavering commitment to quality."
+                       data-hr="Usavršen kroz godine predane proizvodnje, naš sok od mandarine predstavlja vrhunac generacijske stručnosti i nepokolebljive predanosti kvaliteti.">
+                        Perfected through years of dedicated production, our mandarin juice represents the culmination of generational expertise and unwavering commitment to quality.
+                    </p>
                     
                     <ul class="product-features">
-                        <li>100% Pure Mandarin Juice</li>
-                        <li>0% Added Sugar (0% dodatnog šećera)</li>
-                        <li>0% Preservatives (0% konzervansa)</li>
-                        <li>Cold-Pressed from 3-4 kg of Hand-Picked Mandarins per Liter</li>
-                        <li>Harvested at Peak Ripeness</li>
-                        <li>Traditional Production Methods</li>
-                        <li>Available in 1L Bottles</li>
+                        <li data-en="100% Pure Mandarin Juice" data-hr="100% Čisti Sok od Mandarine">100% Pure Mandarin Juice</li>
+                        <li data-en="0% Added Sugar" data-hr="0% Dodanog Šećera">0% Added Sugar</li>
+                        <li data-en="0% Preservatives" data-hr="0% Konzervansa">0% Preservatives</li>
+                        <li data-en="Cold-Pressed from 3-4 kg of Hand-Picked Mandarins per Liter" data-hr="Hladno Prešano od 3-4 kg Ručno Branih Mandarina po Litri">Cold-Pressed from 3-4 kg of Hand-Picked Mandarins per Liter</li>
+                        <li data-en="Harvested at Peak Ripeness" data-hr="Ubrano u Vrhuncu Zrelosti">Harvested at Peak Ripeness</li>
+                        <li data-en="Traditional Production Methods" data-hr="Tradicionalne Metode Proizvodnje">Traditional Production Methods</li>
+                        <li data-en="Available in 1L Bottles" data-hr="Dostupno u Bocama od 1L">Available in 1L Bottles</li>
                     </ul>
 
-                    <p style="margin-top: 1.5rem; font-size: 1.1rem; line-height: 1.8;">
+                    <p style="margin-top: 1.5rem; font-size: 1.05rem; line-height: 1.8;"
+                       data-en="For Retail Partners: Our mandarin juice is the result of multi-generational farming expertise combined with modern quality standards. Each batch undergoes rigorous quality control, ensuring consistency and exceptional taste. We offer competitive wholesale pricing, reliable supply chain management, and full traceability from orchard to bottle. Perfect for health-conscious consumers seeking authentic, premium citrus products."
+                       data-hr="Za Trgovačke Partnere: Naš sok od mandarine rezultat je višegeneracijske poljoprivredne stručnosti u kombinaciji sa modernim standardima kvalitete. Svaka serija prolazi strogu kontrolu kvalitete, osiguravajući dosljednost i izuzetni okus. Nudimo konkurentne veleprodajne cijene, pouzdano upravljanje lancem opskrbe i potpunu sljedivost od voćnjaka do boce. Savršen za zdravstveno osviještene potrošače koji traže autentične, premium proizvode od citrusa.">
                         <strong>For Retail Partners:</strong> Our mandarin juice is the result of multi-generational farming expertise combined with modern quality standards. Each batch undergoes rigorous quality control, ensuring consistency and exceptional taste. We offer competitive wholesale pricing, reliable supply chain management, and full traceability from orchard to bottle. Perfect for health-conscious consumers seeking authentic, premium citrus products.
                     </p>
                 </div>
                 <div class="product-image-grid">
-                    <div class="product-image" style="grid-column: span 2;">
+                    <div class="product-image">
                         <img src="images/opg3.jpeg" alt="Mandarina Juice Bottle">
                     </div>
                 </div>
@@ -759,19 +1106,22 @@
     </section>
 
     <section id="gallery">
-        <h2 class="section-title fade-in">From Our Orchards</h2>
+        <h2 class="section-title fade-in" data-en="From Our Orchards" data-hr="Iz Naših Voćnjaka">From Our Orchards</h2>
         
         <div class="health-benefits fade-in">
-            <h3>🍊 The Neretva Advantage</h3>
+            <h3 data-en="🍊 The Neretva Advantage" data-hr="🍊 Neretvanska Prednost">🍊 The Neretva Advantage</h3>
             <p>
-                Mandarins grown in Neretva's unique soil contain <strong>3-4x more polyphenols and antioxidants</strong> than mandarins from any other region. 
-                This exceptional nutrient density is what makes our cold-pressed elixir more powerful, healthier, and richer in authentic taste. 
-                Every bottle captures the pure essence of the Neretva Valley's mineral-rich earth.
+                <span data-en="Mandarins grown in Neretva's unique soil contain" data-hr="Mandarine uzgojene u jedinstvenom tlu Neretve sadrže">Mandarins grown in Neretva's unique soil contain</span>
+                <strong>3-4x <span data-en="more polyphenols and antioxidants" data-hr="više polifenola i antioksidansa">more polyphenols and antioxidants</span></strong>
+                <span data-en="than mandarins from any other region. This exceptional nutrient density is what makes our cold-pressed elixir more powerful, healthier, and richer in authentic taste. Every bottle captures the pure essence of the Neretva Valley's mineral-rich earth."
+                      data-hr="od mandarina iz bilo koje druge regije. Ova izuzetna gustoća nutrijenata čini naš hladno prešani eliksir moćnijim, zdravijim i bogatijim autentičnim okusom. Svaka boca hvata čistu bit mineralno bogate zemlje doline Neretve.">
+                    than mandarins from any other region. This exceptional nutrient density is what makes our cold-pressed elixir more powerful, healthier, and richer in authentic taste. Every bottle captures the pure essence of the Neretva Valley's mineral-rich earth.
+                </span>
             </p>
         </div>
 
-        <div class="gallery-container">
-            <button class="gallery-arrow left" onclick="moveGallery(-1)">‹</button>
+        <div class="gallery-container fade-in">
+            <button class="gallery-arrow left" onclick="moveGallery(-1)" aria-label="Previous">‹</button>
             <div class="gallery-slider" id="gallerySlider">
                 <div class="gallery-item">
                     <img src="images/opg4.jpg" alt="Harvesting Mandarins">
@@ -786,40 +1136,40 @@
                     <img src="images/opg7.jpg" alt="Neretva Valley Farm">
                 </div>
             </div>
-            <button class="gallery-arrow right" onclick="moveGallery(1)">›</button>
+            <button class="gallery-arrow right" onclick="moveGallery(1)" aria-label="Next">›</button>
         </div>
 
         <div class="gallery-dots" id="galleryDots"></div>
     </section>
 
     <div class="video-section">
-        <h2 class="section-title">See Our Work</h2>
+        <h2 class="section-title fade-in" data-en="See Our Work" data-hr="Pogledajte Naš Rad">See Our Work</h2>
         <div class="video-grid">
-            <div class="video-container">
+            <div class="video-container fade-in">
                 <iframe src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1526241581450995%2F&show_text=false&width=267&t=0" width="267" height="476" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
             </div>
-            <div class="video-container">
+            <div class="video-container fade-in">
                 <iframe src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1144217230494617%2F&show_text=false&width=267&t=0" width="267" height="476" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
             </div>
-            <div class="video-container">
+            <div class="video-container fade-in">
                 <iframe src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2F100088117370199%2Fvideos%2F3952018021699675%2F&show_text=false&width=267&t=0" width="267" height="476" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
             </div>
         </div>
     </div>
 
     <section id="contact">
-        <h2 class="section-title">Get In Touch</h2>
+        <h2 class="section-title fade-in" data-en="Get In Touch" data-hr="Kontaktirajte Nas">Get In Touch</h2>
         <div class="contact-info">
-            <div class="contact-card">
-                <h3>📍 Location</h3>
-                <p>Neretva Valley, Croatia</p>
+            <div class="contact-card fade-in">
+                <h3 data-en="📍 Location" data-hr="📍 Lokacija">📍 Location</h3>
+                <p data-en="Neretva Valley, Croatia" data-hr="Dolina Neretve, Hrvatska">Neretva Valley, Croatia</p>
             </div>
-            <div class="contact-card">
-                <h3>🌐 Website</h3>
+            <div class="contact-card fade-in">
+                <h3 data-en="🌐 Website" data-hr="🌐 Web Stranica">🌐 Website</h3>
                 <p><a href="http://www.opg-orsulic.hr">www.opg-orsulic.hr</a></p>
             </div>
-            <div class="contact-card">
-                <h3>📧 Contact</h3>
+            <div class="contact-card fade-in">
+                <h3 data-en="📧 Contact" data-hr="📧 Kontakt">📧 Contact</h3>
                 <p><a href="mailto:prodaja@opg-orsulic.hr">prodaja@opg-orsulic.hr</a></p>
                 <p><a href="tel:+385976017599">+385 97 601 7599</a></p>
             </div>
@@ -827,21 +1177,68 @@
     </section>
 
     <footer>
-        <p>&copy; 2026 OPG Oršulić - Family Agricultural Holding | Neretva Valley, Croatia</p>
-        <p>Bringing the authentic taste of Neretva to your table 😊</p>
+        <p data-en="&copy; 2026 OPG Oršulić - Family Agricultural Holding | Neretva Valley, Croatia" 
+           data-hr="&copy; 2026 OPG Oršulić - Obiteljsko Poljoprivredno Gospodarstvo | Dolina Neretve, Hrvatska">
+            &copy; 2026 OPG Oršulić - Family Agricultural Holding | Neretva Valley, Croatia
+        </p>
+        <p data-en="Bringing the authentic taste of Neretva to your table 😊" 
+           data-hr="Donosimo autentični okus Neretve na vaš stol 😊">
+            Bringing the authentic taste of Neretva to your table 😊
+        </p>
     </footer>
 
+    <button class="scroll-to-top" onclick="scrollToTop()" aria-label="Scroll to top">↑</button>
+
     <script>
-        // Gallery Slider
+        // Language Switching
+        let currentLang = 'en';
+
+        function switchLanguage(lang) {
+            currentLang = lang;
+            document.documentElement.lang = lang;
+            
+            // Update button states
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update all translatable elements
+            document.querySelectorAll('[data-en]').forEach(element => {
+                const translation = element.getAttribute(`data-${lang}`);
+                if (translation) {
+                    if (element.tagName === 'A' || element.tagName === 'BUTTON' || element.tagName === 'SPAN') {
+                        element.textContent = translation;
+                    } else {
+                        element.innerHTML = translation;
+                    }
+                }
+            });
+
+            // Save language preference
+            localStorage.setItem('preferredLanguage', lang);
+        }
+
+        // Load saved language preference
+        window.addEventListener('load', () => {
+            const savedLang = localStorage.getItem('preferredLanguage');
+            if (savedLang && savedLang !== 'en') {
+                document.querySelector(`.lang-btn[onclick*="${savedLang}"]`)?.click();
+            }
+        });
+
+        // Gallery Slider - FIXED
         let currentSlide = 0;
         const slider = document.getElementById('gallerySlider');
         const items = document.querySelectorAll('.gallery-item');
         const dotsContainer = document.getElementById('galleryDots');
         const totalSlides = items.length;
 
+        // Create dots
         for (let i = 0; i < totalSlides; i++) {
             const dot = document.createElement('button');
             dot.className = 'gallery-dot';
+            dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
             if (i === 0) dot.classList.add('active');
             dot.onclick = () => goToSlide(i);
             dotsContainer.appendChild(dot);
@@ -868,19 +1265,38 @@
 
         function updateGallery() {
             if (items.length === 0) return;
-            const containerWidth = slider.parentElement.offsetWidth - 120;
-            const itemWidth = (containerWidth - 32) / 3;
-            const slideWidth = itemWidth + 32;
-            slider.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
+            
+            const isMobile = window.innerWidth <= 768;
+            
+            if (isMobile) {
+                // Mobile: show one image at a time
+                const slideWidth = items[0].offsetWidth + 32;
+                slider.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
+            } else {
+                // Desktop: show 3 images
+                const containerWidth = slider.parentElement.offsetWidth - 140;
+                const itemWidth = (containerWidth - 64) / 3;
+                const slideWidth = itemWidth + 32;
+                slider.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
+            }
+            
             updateDots();
         }
 
-        // Auto-slide disabled - use arrows or dots to navigate
-        window.addEventListener('resize', updateGallery);
+        // Update gallery on resize
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(updateGallery, 250);
+        });
+
+        // Initialize gallery
+        updateGallery();
 
         // Mobile Menu
         function toggleMobileMenu() {
-            document.getElementById('navLinks').classList.toggle('active');
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
         }
 
         document.querySelectorAll('.nav-links a').forEach(link => {
@@ -889,31 +1305,66 @@
             });
         });
 
-        // Header Scroll
+        // Header Scroll Effect
+        let lastScroll = 0;
         window.addEventListener('scroll', () => {
             const header = document.querySelector('header');
-            header.classList.toggle('scrolled', window.scrollY > 50);
+            const currentScroll = window.pageYOffset;
+            
+            header.classList.toggle('scrolled', currentScroll > 50);
+            
+            // Scroll to top button
+            const scrollBtn = document.querySelector('.scroll-to-top');
+            scrollBtn.classList.toggle('visible', currentScroll > 300);
+            
+            lastScroll = currentScroll;
         });
 
-        // Scroll Animation
+        // Scroll to top function
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Scroll Animation with Intersection Observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('visible');
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
             });
-        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        }, observerOptions);
 
-        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right').forEach(el => {
+            observer.observe(el);
+        });
 
         // Smooth Scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
-                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                if (target) {
+                    const headerOffset = 80;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
             });
         });
 
-        // Parallax
+        // Parallax Effect
         window.addEventListener('scroll', () => {
             const hero = document.querySelector('.hero');
             const scrolled = window.pageYOffset;
@@ -922,25 +1373,27 @@
             }
         });
 
-        // Gallery hover
-        document.querySelectorAll('.gallery-item').forEach(item => {
-            item.addEventListener('mouseenter', function() {
-                this.style.transform = 'scale(1.05)';
-                this.style.transition = 'transform 0.3s ease';
-            });
-            item.addEventListener('mouseleave', function() {
-                this.style.transform = 'scale(1)';
-            });
-        });
-
-        // Touch swipe
+        // Touch swipe for gallery
         let touchStartX = 0, touchEndX = 0;
-        slider.addEventListener('touchstart', (e) => touchStartX = e.changedTouches[0].screenX);
+        
+        slider.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
         slider.addEventListener('touchend', (e) => {
             touchEndX = e.changedTouches[0].screenX;
-            if (touchEndX < touchStartX - 50) moveGallery(1);
-            if (touchEndX > touchStartX + 50) moveGallery(-1);
-        });
+            handleSwipe();
+        }, { passive: true });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            if (touchEndX < touchStartX - swipeThreshold) {
+                moveGallery(1); // Swipe left
+            }
+            if (touchEndX > touchStartX + swipeThreshold) {
+                moveGallery(-1); // Swipe right
+            }
+        }
 
         // Page load animation
         window.addEventListener('load', () => {
@@ -949,6 +1402,35 @@
                 document.body.style.transition = 'opacity 0.5s';
                 document.body.style.opacity = '1';
             }, 100);
+        });
+
+        // Lazy load images
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        if (img.dataset.src) {
+                            img.src = img.dataset.src;
+                            img.removeAttribute('data-src');
+                        }
+                        imageObserver.unobserve(img);
+                    }
+                });
+            });
+
+            document.querySelectorAll('img[data-src]').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+
+        // Add keyboard navigation for gallery
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                moveGallery(-1);
+            } else if (e.key === 'ArrowRight') {
+                moveGallery(1);
+            }
         });
     </script>
 </body>
