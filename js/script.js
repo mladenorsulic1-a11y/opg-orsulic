@@ -83,7 +83,10 @@ function updateGallery() {
     
     if (isMobile) {
         // Mobile: show one image at a time
-        const slideWidth = items[0].offsetWidth + 32;
+        // Use the container width instead of item width for more reliable calculation
+        const container = slider.parentElement;
+        const containerWidth = container.offsetWidth - 100; // Subtract arrow space
+        const slideWidth = containerWidth;
         slider.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
     } else {
         // Desktop: show 3 images
