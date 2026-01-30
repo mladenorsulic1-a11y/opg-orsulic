@@ -227,3 +227,305 @@ document.addEventListener('keydown', (e) => {
 });
 
 console.log('🍊 OPG Oršulić website loaded successfully!');
+
+/* =================================================================
+   LIGHTBOX FUNCTIONALITY
+   ================================================================= */
+
+let currentLightboxIndex = 0;
+const lightboxImages = [
+    { src: 'images/opg4.jpg', alt: 'Harvesting Mandarins' },
+    { src: 'images/opg5.jpg', alt: 'Fresh Mandarin Harvest' },
+    { src: 'images/opg6.jpg', alt: 'Mandarin Orchards' },
+    { src: 'images/opg7.jpg', alt: 'Neretva Valley Farm' },
+    { src: 'images/pic1.jpeg', alt: 'Orchard View 1' },
+    { src: 'images/pic2.jpeg', alt: 'Orchard View 2' },
+    { src: 'images/pic3.jpeg', alt: 'Orchard View 3' },
+    { src: 'images/pic4.jpeg', alt: 'Orchard View 4' },
+    { src: 'images/pic5.jpeg', alt: 'Orchard View 5' }
+];
+
+function openLightbox(index) {
+    currentLightboxIndex = index;
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const caption = document.getElementById('lightboxCaption');
+    
+    lightbox.classList.add('active');
+    lightboxImg.src = lightboxImages[index].src;
+    caption.textContent = lightboxImages[index].alt;
+    
+    // Prevent body scroll
+    document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+    const lightbox = document.getElementById('lightbox');
+    lightbox.classList.remove('active');
+    
+    // Restore body scroll
+    document.body.style.overflow = 'auto';
+}
+
+function changeLightboxImage(direction) {
+    currentLightboxIndex += direction;
+    
+    if (currentLightboxIndex >= lightboxImages.length) {
+        currentLightboxIndex = 0;
+    } else if (currentLightboxIndex < 0) {
+        currentLightboxIndex = lightboxImages.length - 1;
+    }
+    
+    const lightboxImg = document.getElementById('lightboxImg');
+    const caption = document.getElementById('lightboxCaption');
+    
+    lightboxImg.src = lightboxImages[currentLightboxIndex].src;
+    caption.textContent = lightboxImages[currentLightboxIndex].alt;
+}
+
+// Keyboard navigation for lightbox
+document.addEventListener('keydown', (e) => {
+    const lightbox = document.getElementById('lightbox');
+    if (lightbox && lightbox.classList.contains('active')) {
+        if (e.key === 'ArrowLeft') {
+            changeLightboxImage(-1);
+        } else if (e.key === 'ArrowRight') {
+            changeLightboxImage(1);
+        } else if (e.key === 'Escape') {
+            closeLightbox();
+        }
+    }
+});
+
+/* =================================================================
+   CUSTOM VIDEO PLAYER
+   ================================================================= */
+
+function playVideo(button) {
+    const container = button.closest('.video-container');
+    const video = container.querySelector('.custom-video');
+    const overlay = container.querySelector('.video-overlay');
+    
+    if (video.paused) {
+        video.play();
+        overlay.style.opacity = '0';
+        overlay.style.pointerEvents = 'none';
+        container.classList.add('playing');
+    } else {
+        video.pause();
+        overlay.style.opacity = '1';
+        overlay.style.pointerEvents = 'all';
+        container.classList.remove('playing');
+    }
+}
+
+// Auto hide overlay when video is playing
+document.querySelectorAll('.custom-video').forEach(video => {
+    video.addEventListener('play', function() {
+        const container = this.closest('.video-container');
+        const overlay = container.querySelector('.video-overlay');
+        overlay.style.opacity = '0';
+        overlay.style.pointerEvents = 'none';
+        container.classList.add('playing');
+    });
+    
+    video.addEventListener('pause', function() {
+        const container = this.closest('.video-container');
+        const overlay = container.querySelector('.video-overlay');
+        if (!this.ended) {
+            overlay.style.opacity = '1';
+            overlay.style.pointerEvents = 'all';
+            container.classList.remove('playing');
+        }
+    });
+    
+    video.addEventListener('ended', function() {
+        const container = this.closest('.video-container');
+        const overlay = container.querySelector('.video-overlay');
+        overlay.style.opacity = '1';
+        overlay.style.pointerEvents = 'all';
+        container.classList.remove('playing');
+    });
+});
+
+/* =================================================================
+   SCROLL PROGRESS INDICATOR
+   ================================================================= */
+
+function updateScrollProgress() {
+    const scrollProgress = document.createElement('div');
+    scrollProgress.className = 'scroll-progress';
+    document.body.prepend(scrollProgress);
+    
+    window.addEventListener('scroll', () => {
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        scrollProgress.style.width = scrolled + '%';
+    });
+}
+
+// Initialize scroll progress
+updateScrollProgress();
+
+/* =================================================================
+   LAZY LOADING IMAGES (Enhanced)
+   ================================================================= */
+
+if ('IntersectionObserver' in window) {
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                if (img.dataset.src) {
+                    img.src = img.dataset.src;
+                    img.removeAttribute('data-src');
+                    img.classList.add('loaded');
+                }
+                observer.unobserve(img);
+            }
+        });
+    }, {
+        rootMargin: '50px'
+    });
+
+    document.querySelectorAll('img[data-src]').forEach(img => {
+        imageObserver.observe(img);
+    });
+}
+
+/* =================================================================
+   WHATSAPP FLOATING BUTTON
+   ================================================================= */
+
+function createWhatsAppButton() {
+    const whatsappBtn = document.createElement('a');
+    whatsappBtn.href = 'https://wa.me/385976017599';
+    whatsappBtn.target = '_blank';
+    whatsappBtn.className = 'whatsapp-float';
+    whatsappBtn.innerHTML = '💬';
+    whatsappBtn.title = 'Contact us on WhatsApp';
+    document.body.appendChild(whatsappBtn);
+    
+    // Show button on scroll
+    window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 300) {
+            whatsappBtn.style.display = 'flex';
+        } else {
+            whatsappBtn.style.display = 'none';
+        }
+    });
+}
+
+// Initialize WhatsApp button
+createWhatsAppButton();
+
+/* =================================================================
+   COUNTER ANIMATION (for statistics if needed)
+   ================================================================= */
+
+function animateCounter(element, target, duration = 2000) {
+    let start = 0;
+    const increment = target / (duration / 16);
+    
+    const timer = setInterval(() => {
+        start += increment;
+        if (start >= target) {
+            element.textContent = target;
+            clearInterval(timer);
+        } else {
+            element.textContent = Math.floor(start);
+        }
+    }, 16);
+}
+
+/* =================================================================
+   SMOOTH REVEAL ON SCROLL (Enhanced)
+   ================================================================= */
+
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+        }
+    });
+}, {
+    threshold: 0.15,
+    rootMargin: '0px 0px -100px 0px'
+});
+
+document.querySelectorAll('.reveal-on-scroll').forEach(el => {
+    revealObserver.observe(el);
+});
+
+/* =================================================================
+   COPY TO CLIPBOARD (for email/phone)
+   ================================================================= */
+
+function copyToClipboard(text, element) {
+    navigator.clipboard.writeText(text).then(() => {
+        const originalText = element.textContent;
+        element.textContent = currentLang === 'en' ? 'Copied!' : 'Kopirano!';
+        element.style.color = '#4caf50';
+        
+        setTimeout(() => {
+            element.textContent = originalText;
+            element.style.color = '';
+        }, 2000);
+    });
+}
+
+/* =================================================================
+   EASTER EGG - Konami Code
+   ================================================================= */
+
+let konamiCode = [];
+const konamiPattern = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+
+document.addEventListener('keydown', (e) => {
+    konamiCode.push(e.key);
+    konamiCode = konamiCode.slice(-konamiPattern.length);
+    
+    if (konamiCode.join(',') === konamiPattern.join(',')) {
+        // Easter egg activated!
+        document.body.style.transform = 'rotate(180deg)';
+        setTimeout(() => {
+            document.body.style.transform = 'rotate(0deg)';
+        }, 1000);
+        
+        // Show fun message
+        const msg = document.createElement('div');
+        msg.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#ff9800;color:white;padding:2rem;border-radius:20px;font-size:2rem;z-index:99999;';
+        msg.textContent = '🍊 Secret Mandarin Code Activated! 🍊';
+        document.body.appendChild(msg);
+        setTimeout(() => msg.remove(), 3000);
+    }
+});
+
+/* =================================================================
+   PERFORMANCE MONITORING
+   ================================================================= */
+
+if (window.performance) {
+    window.addEventListener('load', () => {
+        const perfData = window.performance.timing;
+        const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
+        console.log(`🍊 Page loaded in ${pageLoadTime}ms`);
+    });
+}
+
+/* =================================================================
+   INITIALIZE ALL FEATURES ON LOAD
+   ================================================================= */
+
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('🍊 All enhanced features initialized!');
+    console.log('✅ Lightbox gallery');
+    console.log('✅ Custom video player');
+    console.log('✅ Scroll progress bar');
+    console.log('✅ WhatsApp floating button');
+    console.log('✅ Lazy loading images');
+    console.log('✅ Easter egg activated (try Konami code!)');
+});
+
+console.log('🍊 OPG Oršulić Enhanced Website v2.0!');

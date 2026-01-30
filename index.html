@@ -130,7 +130,7 @@
     </section>
 
     <section id="gallery">
-        <h2 class="section-title fade-in" data-en="From Our Orchards" data-hr="Iz naših voćnjaka">From Our Orchards</h2>
+        <h2 class="section-title fade-in" data-en="From Our Orchards" data-hr="Sa naše plantaže">From Our Orchards</h2>
         
         <div class="health-benefits fade-in">
             <h3 data-en="🍊 The Neretva Advantage" data-hr="🍊 Neretvanska prednost">🍊 The Neretva Advantage</h3>
@@ -147,17 +147,32 @@
         <div class="gallery-container fade-in">
             <button class="gallery-arrow left" onclick="moveGallery(-1)" aria-label="Previous">‹</button>
             <div class="gallery-slider" id="gallerySlider">
-                <div class="gallery-item">
-                    <img src="images/opg4.jpg" alt="Harvesting Mandarins">
+                <div class="gallery-item" onclick="openLightbox(0)">
+                    <img src="images/opg4.jpg" alt="Harvesting Mandarins" loading="lazy">
                 </div>
-                <div class="gallery-item">
-                    <img src="images/opg5.jpg" alt="Fresh Mandarin Harvest">
+                <div class="gallery-item" onclick="openLightbox(1)">
+                    <img src="images/opg5.jpg" alt="Fresh Mandarin Harvest" loading="lazy">
                 </div>
-                <div class="gallery-item">
-                    <img src="images/opg6.jpg" alt="Mandarin Orchards">
+                <div class="gallery-item" onclick="openLightbox(2)">
+                    <img src="images/opg6.jpg" alt="Mandarin Orchards" loading="lazy">
                 </div>
-                <div class="gallery-item">
-                    <img src="images/opg7.jpg" alt="Neretva Valley Farm">
+                <div class="gallery-item" onclick="openLightbox(3)">
+                    <img src="images/opg7.jpg" alt="Neretva Valley Farm" loading="lazy">
+                </div>
+                <div class="gallery-item" onclick="openLightbox(4)">
+                    <img src="images/pic1.jpeg" alt="Orchard View 1" loading="lazy">
+                </div>
+                <div class="gallery-item" onclick="openLightbox(5)">
+                    <img src="images/pic2.jpeg" alt="Orchard View 2" loading="lazy">
+                </div>
+                <div class="gallery-item" onclick="openLightbox(6)">
+                    <img src="images/pic3.jpeg" alt="Orchard View 3" loading="lazy">
+                </div>
+                <div class="gallery-item" onclick="openLightbox(7)">
+                    <img src="images/pic4.jpeg" alt="Orchard View 4" loading="lazy">
+                </div>
+                <div class="gallery-item" onclick="openLightbox(8)">
+                    <img src="images/pic5.jpeg" alt="Orchard View 5" loading="lazy">
                 </div>
             </div>
             <button class="gallery-arrow right" onclick="moveGallery(1)" aria-label="Next">›</button>
@@ -166,8 +181,19 @@
         <div class="gallery-dots" id="galleryDots"></div>
     </section>
 
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <img class="lightbox-content" id="lightboxImg">
+        <button class="lightbox-prev" onclick="event.stopPropagation(); changeLightboxImage(-1)">❮</button>
+        <button class="lightbox-next" onclick="event.stopPropagation(); changeLightboxImage(1)">❯</button>
+        <div class="lightbox-caption" id="lightboxCaption"></div>
+    </div>
+
     <div class="video-section">
         <h2 class="section-title fade-in" data-en="See Our Work" data-hr="Pogledajte naš rad">See Our Work</h2>
+        
+        <!-- Facebook Videos -->
         <div class="video-grid">
             <div class="video-container fade-in">
                 <iframe src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1526241581450995%2F&show_text=false&width=267&t=0" width="267" height="476" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
@@ -177,6 +203,38 @@
             </div>
             <div class="video-container fade-in">
                 <iframe src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2F100088117370199%2Fvideos%2F3952018021699675%2F&show_text=false&width=267&t=0" width="267" height="476" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
+            </div>
+        </div>
+
+        <!-- Local Videos -->
+        <h3 class="section-title fade-in" style="margin-top: 4rem; font-size: 2rem;" data-en="Harvest Season Videos" data-hr="Videji tijekom berbe">Harvest Season Videos</h3>
+        <div class="video-grid local-videos">
+            <div class="video-container fade-in">
+                <video class="custom-video" controls preload="metadata">
+                    <source src="images/vid1.mp4" type="video/mp4">
+                    <span data-en="Your browser does not support the video tag." data-hr="Vaš preglednik ne podržava video oznaku.">Your browser does not support the video tag.</span>
+                </video>
+                <div class="video-overlay">
+                    <button class="play-btn" onclick="playVideo(this)">▶</button>
+                </div>
+            </div>
+            <div class="video-container fade-in">
+                <video class="custom-video" controls preload="metadata">
+                    <source src="images/vid2.mp4" type="video/mp4">
+                    <span data-en="Your browser does not support the video tag." data-hr="Vaš preglednik ne podržava video oznaku.">Your browser does not support the video tag.</span>
+                </video>
+                <div class="video-overlay">
+                    <button class="play-btn" onclick="playVideo(this)">▶</button>
+                </div>
+            </div>
+            <div class="video-container fade-in">
+                <video class="custom-video" controls preload="metadata">
+                    <source src="images/vid3.mp4" type="video/mp4">
+                    <span data-en="Your browser does not support the video tag." data-hr="Vaš preglednik ne podržava video oznaku.">Your browser does not support the video tag.</span>
+                </video>
+                <div class="video-overlay">
+                    <button class="play-btn" onclick="playVideo(this)">▶</button>
+                </div>
             </div>
         </div>
     </div>
