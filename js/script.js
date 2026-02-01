@@ -240,12 +240,7 @@ const lightboxImages = [
     { src: 'images/opg4.jpg', alt: 'Harvesting Mandarins' },
     { src: 'images/opg5.jpg', alt: 'Fresh Mandarin Harvest' },
     { src: 'images/opg6.jpg', alt: 'Mandarin Orchards' },
-    { src: 'images/opg7.jpg', alt: 'Neretva Valley Farm' },
-    { src: 'images/pic1.jpeg', alt: 'Orchard View 1' },
-    { src: 'images/pic2.jpeg', alt: 'Orchard View 2' },
-    { src: 'images/pic3.jpeg', alt: 'Orchard View 3' },
-    { src: 'images/pic4.jpeg', alt: 'Orchard View 4' },
-    { src: 'images/pic5.jpeg', alt: 'Orchard View 5' }
+    { src: 'images/opg7.jpg', alt: 'Neretva Valley Farm' }
 ];
 
 function openLightbox(index) {
