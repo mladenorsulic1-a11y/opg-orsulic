@@ -3,26 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OPG Oršulić - Neretva Valley Family Agricultural Holding</title>
+    <title>OPG Oršulić — Premium Mandarin Juice from Neretva Valley</title>
     
-    <!-- Favicon (logo u tabu) -->
+    <!-- Favicon -->
     <link rel="icon" type="image/jpeg" href="images/logo.jpg">
     <link rel="shortcut icon" type="image/jpeg" href="images/logo.jpg">
     <link rel="apple-touch-icon" href="images/logo.jpg">
     
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet">
+
     <!-- CSS -->
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <header>
+
+    <!-- Scroll Progress -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Navigation -->
+    <header id="mainHeader">
         <nav>
             <div class="nav-left">
                 <a href="#" class="logo">
                     <img src="images/logo.jpg" alt="OPG Oršulić Logo">
-                    OPG Oršulić
+                    <span class="logo-text">OPG Oršulić</span>
                 </a>
             </div>
-            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#home" data-en="Home" data-hr="Početna">Home</a></li>
                 <li><a href="#about" data-en="About" data-hr="O nama">About</a></li>
@@ -38,19 +52,31 @@
         </nav>
     </header>
 
+    <!-- Hero Section -->
     <section id="home" class="hero">
+        <div class="hero-bg-overlay"></div>
         <div class="hero-content">
-            <h1>OPG Oršulić</h1>
-            <p class="hero-subtitle" data-en="Family Agricultural Holding" data-hr="Obiteljsko poljoprivredno gospodarstvo">Family Agricultural Holding</p>
-            <p data-en="From Our Family Farm in Neretva Valley to Your Table" data-hr="S naše obiteljske plantaže u dolini Neretve na vaš stol">From Our Family Farm in Neretva Valley to Your Table</p>
-            <a href="#product" class="cta-button" data-en="Discover Our Products" data-hr="Otkrijte naše proizvode">Discover Our Products</a>
+            <p class="hero-tagline fade-in" data-en="Neretva Valley, Croatia" data-hr="Dolina Neretve, Hrvatska">Neretva Valley, Croatia</p>
+            <h1 class="fade-in">OPG Oršulić</h1>
+            <div class="hero-divider fade-in"></div>
+            <p class="hero-subtitle fade-in" data-en="Family Agricultural Holding" data-hr="Obiteljsko poljoprivredno gospodarstvo">Family Agricultural Holding</p>
+            <p class="hero-desc fade-in" data-en="From Our Family Farm in Neretva Valley to Your Table" data-hr="S naše obiteljske plantaže u dolini Neretve na vaš stol">From Our Family Farm in Neretva Valley to Your Table</p>
+            <a href="#product" class="cta-button fade-in" data-en="Discover Our Products" data-hr="Otkrijte naše proizvode">Discover Our Products</a>
+        </div>
+        <div class="hero-scroll-indicator">
+            <span data-en="Scroll" data-hr="Pomakni">Scroll</span>
+            <div class="scroll-line"></div>
         </div>
     </section>
 
+    <!-- About Section -->
     <section id="about">
-        <h2 class="section-title fade-in" data-en="Our Story" data-hr="Naša priča">Our Story</h2>
+        <div class="section-header fade-in">
+            <span class="section-label" data-en="Our Heritage" data-hr="Naše nasljeđe">Our Heritage</span>
+            <h2 class="section-title" data-en="Our Story" data-hr="Naša priča">Our Story</h2>
+        </div>
         <div class="about-content">
-            <div class="about-text slide-in-left fade-in">
+            <div class="about-text fade-in">
                 <h3 data-en="Family Tradition Since Generations" data-hr="Obiteljska tradicija generacijama">Family Tradition Since Generations</h3>
                 <p data-en="We are a family-owned farm nestled in the fertile Neretva Valley, where generations of the Oršulić family have cultivated the land with passion and dedication. Our valley's unique microclimate and rich soil create the perfect conditions for growing exceptional citrus fruits and vegetables." 
                    data-hr="Mi smo obiteljska plantaža smještena u plodnoj dolini Neretve, gdje generacije obitelji Oršulić obrađuju zemlju s ljubavlju i predanošću. Jedinstvena mikroklima naše doline i bogato tlo stvaraju savršene uvjete za uzgoj izuzetnih agruma i povrća.">
@@ -65,35 +91,47 @@
                     Our mission is simple: to bring the pure, sun-kissed flavors of the Neretva Valley directly to your table, maintaining the highest standards of quality and sustainability.
                 </p>
             </div>
-            <div class="about-image slide-in-right fade-in">
+            <div class="about-image fade-in">
                 <img src="images/opg1.jpg" alt="OPG Oršulić Family Farm">
+                <div class="about-image-accent"></div>
             </div>
         </div>
     </section>
 
+    <!-- Certifications Section -->
     <section id="certifications" class="certifications">
-        <h2 class="section-title fade-in" data-en="Our Certifications" data-hr="Neretvanska mandarina">Our Certifications</h2>
-        <p class="fade-in" style="max-width: 800px; margin: 0 auto 2rem; font-size: 1.1rem; color: #555;" 
-           data-en="Our Neretvanska Mandarina is officially recognized and protected by the European Union as a product of unique quality and geographical origin."
+        <div class="section-header fade-in">
+            <span class="section-label" data-en="Quality Assurance" data-hr="Jamstvo kvalitete">Quality Assurance</span>
+            <h2 class="section-title" data-en="Certifications" data-hr="Neretvanska mandarina">Certifications</h2>
+        </div>
+        <p class="cert-description fade-in" 
+           data-en="Neretvanska Mandarina is officially recognized and protected by the European Union as a product of unique quality and geographical origin."
            data-hr="Službeno je priznata i zaštićena od strane Europske unije kao proizvod jedinstvene kvalitete i zemljopisnog podrijetla.">
-            Our Neretvanska Mandarina is officially recognized and protected by the European Union as a product of unique quality and geographical origin.
+            Neretvanska Mandarina is officially recognized and protected by the European Union as a product of unique quality and geographical origin.
         </p>
         <div class="cert-container fade-in">
             <div class="cert-item">
-                <img src="images/ZOI_plakat_3.png" alt="ZOI - Protected Designation of Origin">
+                <div class="cert-image-wrap">
+                    <img src="images/ZOI_plakat_3.png" alt="ZOI - Protected Designation of Origin">
+                </div>
                 <h4 data-en="EU Protected Designation of Origin (PDO)" data-hr="Zaštićena oznaka izvornosti (ZOI)">EU Protected Designation of Origin (PDO)</h4>
-                <p style="margin-top: 0.5rem; color: #666;" data-en="Registered in EU Regulation 2015/1150" data-hr="Registrirano u EU uredbi 2015/1150">Registered in EU Regulation 2015/1150</p>
+                <p data-en="Registered in EU Regulation 2015/1150" data-hr="Registrirano u EU uredbi 2015/1150">Registered in EU Regulation 2015/1150</p>
             </div>
         </div>
         <div class="pdf-download fade-in">
             <a href="EU_Regulation_2015_1150.pdf" target="_blank" download>
-                <span data-en="📄 Download Official EU Regulation Document" data-hr="📄 Preuzmi službeni EU dokument uredbe">📄 Download Official EU Regulation Document</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span data-en="Download Official EU Regulation Document" data-hr="Preuzmi službeni EU dokument uredbe">Download Official EU Regulation Document</span>
             </a>
         </div>
     </section>
 
+    <!-- Product Section -->
     <section id="product">
-        <h2 class="section-title fade-in" data-en="Our Signature Product" data-hr="Naš prepoznatljivi proizvod">Our Signature Product</h2>
+        <div class="section-header fade-in">
+            <span class="section-label" data-en="What We Offer" data-hr="Što nudimo">What We Offer</span>
+            <h2 class="section-title" data-en="Our Signature Product" data-hr="Naš prepoznatljivi proizvod">Our Signature Product</h2>
+        </div>
         <div class="product-hero fade-in">
             <div class="product-grid">
                 <div class="product-info">
@@ -112,13 +150,6 @@
                         <li data-en="Traditional Production Methods" data-hr="Tradicionalne metode proizvodnje">Traditional Production Methods</li>
                         <li data-en="Available in 1L Bottles" data-hr="Dostupno u bocama od 1 litre">Available in 1L Bottles</li>
                     </ul>
-
-                    <p style="margin-top: 1.5rem; font-size: 1.05rem; line-height: 1.8;"
-                       data-en="For Retail Partners: Our mandarin juice is the result of multi-generational farming expertise combined with modern quality standards. Each batch undergoes rigorous quality control, ensuring consistency and exceptional taste. We offer competitive wholesale pricing, reliable supply chain management, and full traceability from orchard to bottle. Perfect for health-conscious consumers seeking authentic, premium citrus products."
-                       data-hr="Za trgovačke partnere: Naš sok od mandarine rezultat je višegeneracijskog poljoprivrednog znanja u kombinaciji s modernim standardima kvalitete. Svaka serija prolazi strogu kontrolu kvalitete, osiguravajući dosljednost i izuzetan okus. Nudimo konkurentne veleprodajne cijene, pouzdano upravljanje lancem opskrbe i potpunu sljedivost od voćnjaka do boce. Savršen za zdravstveno osviještene potrošače koji traže autentične premium proizvode od agruma.">
-                        <strong>For Retail Partners:</strong> Our mandarin juice is the result of multi-generational farming expertise combined with modern quality standards.
- Each batch undergoes rigorous quality control, ensuring consistency and exceptional taste. We offer competitive wholesale pricing, reliable supply chain management, and full traceability from orchard to bottle. Perfect for health-conscious consumers seeking authentic, premium citrus products.
-                    </p>
                 </div>
                 <div class="product-image-grid">
                     <div class="product-image">
@@ -127,25 +158,41 @@
                 </div>
             </div>
         </div>
+
+        <!-- Wholesale Info -->
+        <div class="wholesale-info fade-in">
+            <p data-en="For Retail Partners: Our mandarin juice is the result of multi-generational farming expertise combined with modern quality standards. Each batch undergoes rigorous quality control, ensuring consistency and exceptional taste. We offer competitive wholesale pricing, reliable supply chain management, and full traceability from orchard to bottle. Perfect for health-conscious consumers seeking authentic, premium citrus products."
+               data-hr="Za trgovačke partnere: Naš sok od mandarine rezultat je višegeneracijskog poljoprivrednog znanja u kombinaciji s modernim standardima kvalitete. Svaka serija prolazi strogu kontrolu kvalitete, osiguravajući dosljednost i izuzetan okus. Nudimo konkurentne veleprodajne cijene, pouzdano upravljanje lancem opskrbe i potpunu sljedivost od voćnjaka do boce. Savršen za zdravstveno osviještene potrošače koji traže autentične premium proizvode od agruma.">
+                <strong data-en="For Retail Partners:" data-hr="Za trgovačke partnere:">For Retail Partners:</strong> Our mandarin juice is the result of multi-generational farming expertise combined with modern quality standards. Each batch undergoes rigorous quality control, ensuring consistency and exceptional taste. We offer competitive wholesale pricing, reliable supply chain management, and full traceability from orchard to bottle. Perfect for health-conscious consumers seeking authentic, premium citrus products.
+            </p>
+        </div>
     </section>
 
+    <!-- Gallery Section -->
     <section id="gallery">
-        <h2 class="section-title fade-in" data-en="From Our Orchards" data-hr="Sa naše plantaže">From Our Orchards</h2>
+        <div class="section-header fade-in">
+            <span class="section-label" data-en="Our Farm" data-hr="Naša plantaža">Our Farm</span>
+            <h2 class="section-title" data-en="From Our Orchards" data-hr="Sa naše plantaže">From Our Orchards</h2>
+        </div>
         
         <div class="health-benefits fade-in">
-            <h3 data-en="🍊 The Neretva Advantage" data-hr="🍊 Neretvanska prednost">🍊 The Neretva Advantage</h3>
-            <p>
-                <span data-en="Mandarins grown in Neretva's unique soil contain" data-hr="Mandarine uzgojene u jedinstvenom tlu Neretve sadrže">Mandarins grown in Neretva's unique soil contain</span>
-                <strong>3-4x <span data-en="more polyphenols and antioxidants" data-hr="više polifenola i antioksidansa">more polyphenols and antioxidants</span></strong>
-                <span data-en="than mandarins from any other region. This exceptional nutrient density is what makes our cold-pressed elixir more powerful, healthier, and richer in authentic taste. Every bottle captures the pure essence of the Neretva Valley's mineral-rich earth."
-                      data-hr="od mandarina iz bilo koje druge regije. Ova izuzetna gustoća hranjivih tvari čini naš hladno prešani eliksir moćnijim, zdravijim i bogatijim autentičnim okusom. Svaka boca hvata čistu bit mineralno bogate zemlje doline Neretve.">
-                    than mandarins from any other region. This exceptional nutrient density is what makes our cold-pressed elixir more powerful, healthier, and richer in authentic taste. Every bottle captures the pure essence of the Neretva Valley's mineral-rich earth.
-                </span>
-            </p>
+            <div class="health-benefits-inner">
+                <h3 data-en="The Neretva Advantage" data-hr="Neretvanska prednost">The Neretva Advantage</h3>
+                <p>
+                    <span data-en="Mandarins grown in Neretva's unique soil contain" data-hr="Mandarine uzgojene u jedinstvenom tlu Neretve sadrže">Mandarins grown in Neretva's unique soil contain</span>
+                    <strong>3-4x <span data-en="more polyphenols and antioxidants" data-hr="više polifenola i antioksidansa">more polyphenols and antioxidants</span></strong>
+                    <span data-en="than mandarins from any other region. This exceptional nutrient density is what makes our cold-pressed elixir more powerful, healthier, and richer in authentic taste. Every bottle captures the pure essence of the Neretva Valley's mineral-rich earth."
+                          data-hr="od mandarina iz bilo koje druge regije. Ova izuzetna gustoća hranjivih tvari čini naš hladno prešani eliksir moćnijim, zdravijim i bogatijim autentičnim okusom. Svaka boca hvata čistu bit mineralno bogate zemlje doline Neretve.">
+                        than mandarins from any other region. This exceptional nutrient density is what makes our cold-pressed elixir more powerful, healthier, and richer in authentic taste. Every bottle captures the pure essence of the Neretva Valley's mineral-rich earth.
+                    </span>
+                </p>
+            </div>
         </div>
 
         <div class="gallery-container fade-in">
-            <button class="gallery-arrow left" onclick="moveGallery(-1)" aria-label="Previous">‹</button>
+            <button class="gallery-arrow left" onclick="moveGallery(-1)" aria-label="Previous">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
             <div class="gallery-slider" id="gallerySlider">
                 <div class="gallery-item" onclick="openLightbox(0)">
                     <img src="images/opg4.jpg" alt="Harvesting Mandarins" loading="lazy">
@@ -160,7 +207,9 @@
                     <img src="images/opg7.jpg" alt="Neretva Valley Farm" loading="lazy">
                 </div>
             </div>
-            <button class="gallery-arrow right" onclick="moveGallery(1)" aria-label="Next">›</button>
+            <button class="gallery-arrow right" onclick="moveGallery(1)" aria-label="Next">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
         </div>
 
         <div class="gallery-dots" id="galleryDots"></div>
@@ -170,15 +219,18 @@
     <div id="lightbox" class="lightbox" onclick="closeLightbox()">
         <span class="lightbox-close">&times;</span>
         <img class="lightbox-content" id="lightboxImg">
-        <button class="lightbox-prev" onclick="event.stopPropagation(); changeLightboxImage(-1)">❮</button>
-        <button class="lightbox-next" onclick="event.stopPropagation(); changeLightboxImage(1)">❯</button>
+        <button class="lightbox-prev" onclick="event.stopPropagation(); changeLightboxImage(-1)">&#10094;</button>
+        <button class="lightbox-next" onclick="event.stopPropagation(); changeLightboxImage(1)">&#10095;</button>
         <div class="lightbox-caption" id="lightboxCaption"></div>
     </div>
 
+    <!-- Video Section -->
     <div class="video-section">
-        <h2 class="section-title fade-in" data-en="See Our Work" data-hr="Pogledajte naš rad">See Our Work</h2>
+        <div class="section-header fade-in">
+            <span class="section-label" data-en="Behind The Scenes" data-hr="Iza kulisa">Behind The Scenes</span>
+            <h2 class="section-title" data-en="See Our Work" data-hr="Pogledajte naš rad">See Our Work</h2>
+        </div>
         
-        <!-- Facebook Videos -->
         <div class="video-grid">
             <div class="video-container fade-in">
                 <iframe src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1526241581450995%2F&show_text=false&width=267&t=0" width="267" height="476" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
@@ -192,37 +244,60 @@
         </div>
     </div>
 
+    <!-- Contact Section -->
     <section id="contact">
-        <h2 class="section-title fade-in" data-en="Get In Touch" data-hr="Kontaktirajte nas">Get In Touch</h2>
+        <div class="section-header fade-in">
+            <span class="section-label" data-en="Reach Out" data-hr="Javite nam se">Reach Out</span>
+            <h2 class="section-title" data-en="Get In Touch" data-hr="Kontaktirajte nas">Get In Touch</h2>
+        </div>
         <div class="contact-info">
             <div class="contact-card fade-in">
-                <h3 data-en="📍 Location" data-hr="📍 Lokacija">📍 Location</h3>
+                <div class="contact-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                </div>
+                <h3 data-en="Location" data-hr="Lokacija">Location</h3>
                 <p data-en="Neretva Valley, Croatia" data-hr="Dolina Neretve, Hrvatska">Neretva Valley, Croatia</p>
             </div>
             <div class="contact-card fade-in">
-                <h3 data-en="🌐 Website" data-hr="🌐 Web stranica">🌐 Website</h3>
+                <div class="contact-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                </div>
+                <h3 data-en="Website" data-hr="Web stranica">Website</h3>
                 <p><a href="http://www.opg-orsulic.hr">www.opg-orsulic.hr</a></p>
             </div>
             <div class="contact-card fade-in">
-                <h3 data-en="📧 Contact" data-hr="📧 Kontakt">📧 Contact</h3>
+                <div class="contact-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </div>
+                <h3 data-en="Contact" data-hr="Kontakt">Contact</h3>
                 <p><a href="mailto:prodaja@opg-orsulic.hr">prodaja@opg-orsulic.hr</a></p>
                 <p><a href="tel:+385976017599">+385 97 601 7599</a></p>
             </div>
         </div>
     </section>
 
+    <!-- Footer -->
     <footer>
-        <p data-en="&copy; 2026 OPG Oršulić - Family Agricultural Holding | Neretva Valley, Croatia" 
-           data-hr="&copy; 2026 OPG Oršulić - Obiteljsko poljoprivredno gospodarstvo | Dolina Neretve, Hrvatska">
-            &copy; 2026 OPG Oršulić - Family Agricultural Holding | Neretva Valley, Croatia
-        </p>
-        <p data-en="Bringing the authentic taste of Neretva to your table 😊" 
-           data-hr="Donosimo autentični okus Neretve na vaš stol 😊">
-            Bringing the authentic taste of Neretva to your table 😊
-        </p>
+        <div class="footer-inner">
+            <div class="footer-logo">
+                <img src="images/logo.jpg" alt="OPG Oršulić">
+                <span>OPG Oršulić</span>
+            </div>
+            <p data-en="&copy; 2026 OPG Oršulić — Family Agricultural Holding | Neretva Valley, Croatia" 
+               data-hr="&copy; 2026 OPG Oršulić — Obiteljsko poljoprivredno gospodarstvo | Dolina Neretve, Hrvatska">
+                &copy; 2026 OPG Oršulić — Family Agricultural Holding | Neretva Valley, Croatia
+            </p>
+            <p class="footer-tagline" data-en="Bringing the authentic taste of Neretva to your table" 
+               data-hr="Donosimo autentični okus Neretve na vaš stol">
+                Bringing the authentic taste of Neretva to your table
+            </p>
+        </div>
     </footer>
 
-    <button class="scroll-to-top" onclick="scrollToTop()" aria-label="Scroll to top">↑</button>
+    <!-- Scroll to Top -->
+    <button class="scroll-to-top" onclick="scrollToTop()" aria-label="Scroll to top">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+    </button>
 
     <!-- JavaScript -->
     <script src="js/script.js"></script>

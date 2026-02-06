@@ -1,66 +1,54 @@
 /* =================================================================
-   OPG ORŠULIĆ - JAVASCRIPT
+   OPG ORŠULIĆ — PREMIUM WEBSITE JAVASCRIPT
    ================================================================= */
 
-// Language Switching
+// ── Language Switching ────────────────────────────────────────────
 let currentLang = 'en';
 
 function switchLanguage(lang) {
     currentLang = lang;
     document.documentElement.lang = lang;
-    
-    // Update button states
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.classList.remove('active');
-    });
+    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
     event.target.classList.add('active');
-    
-    // Update all translatable elements
-    document.querySelectorAll('[data-en]').forEach(element => {
-        const translation = element.getAttribute(`data-${lang}`);
+    document.querySelectorAll('[data-en]').forEach(el => {
+        const translation = el.getAttribute('data-' + lang);
         if (translation) {
-            if (element.tagName === 'A' || element.tagName === 'BUTTON' || element.tagName === 'SPAN') {
-                element.textContent = translation;
+            if (['A', 'BUTTON', 'SPAN'].includes(el.tagName)) {
+                el.textContent = translation;
             } else {
-                element.innerHTML = translation;
+                el.innerHTML = translation;
             }
         }
     });
-
-    // Save language preference
     localStorage.setItem('preferredLanguage', lang);
 }
 
-// Load saved language preference
-window.addEventListener('load', () => {
-    const savedLang = localStorage.getItem('preferredLanguage');
+window.addEventListener('load', function() {
+    var savedLang = localStorage.getItem('preferredLanguage');
     if (savedLang && savedLang !== 'en') {
-        const langBtn = document.querySelector(`.lang-btn[onclick*="${savedLang}"]`);
+        var langBtn = document.querySelector('.lang-btn[onclick*="' + savedLang + '"]');
         if (langBtn) langBtn.click();
     }
 });
+// ── Gallery Slider ───────────────────────────────────────────────
+var currentSlide = 0;
+var slider = document.getElementById('gallerySlider');
+var items = document.querySelectorAll('.gallery-item');
+var dotsContainer = document.getElementById('galleryDots');
+var totalSlides = items.length;
 
-// Gallery Slider
-let currentSlide = 0;
-const slider = document.getElementById('gallerySlider');
-const items = document.querySelectorAll('.gallery-item');
-const dotsContainer = document.getElementById('galleryDots');
-const totalSlides = items.length;
-
-// Create dots
-for (let i = 0; i < totalSlides; i++) {
-    const dot = document.createElement('button');
+for (var i = 0; i < totalSlides; i++) {
+    var dot = document.createElement('button');
     dot.className = 'gallery-dot';
-    dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+    dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
     if (i === 0) dot.classList.add('active');
-    dot.onclick = () => goToSlide(i);
+    dot.onclick = (function(idx) { return function() { goToSlide(idx); }; })(i);
     dotsContainer.appendChild(dot);
 }
 
 function updateDots() {
-    const dots = document.querySelectorAll('.gallery-dot');
-    dots.forEach((dot, index) => {
-        dot.classList.toggle('active', index === currentSlide);
+    document.querySelectorAll('.gallery-dot').forEach(function(dot, i) {
+        dot.classList.toggle('active', i === currentSlide);
     });
 }
 
@@ -75,168 +63,122 @@ function goToSlide(index) {
     currentSlide = index;
     updateGallery();
 }
-
 function updateGallery() {
-    if (items.length === 0) return;
-    
-    const isMobile = window.innerWidth <= 768;
-    
+    if (!items.length) return;
+    var isMobile = window.innerWidth <= 768;
     if (isMobile) {
-        // Mobile: show one image at a time
-        // Use the container width instead of item width for more reliable calculation
-        const container = slider.parentElement;
-        const containerWidth = container.offsetWidth - 100; // Subtract arrow space
-        const slideWidth = containerWidth;
-        slider.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
+        var container = slider.parentElement;
+        var containerWidth = container.offsetWidth - 100;
+        slider.style.transform = 'translateX(-' + (currentSlide * containerWidth) + 'px)';
     } else {
-        // Desktop: show 3 images
-        const containerWidth = slider.parentElement.offsetWidth - 140;
-        const itemWidth = (containerWidth - 64) / 3;
-        const slideWidth = itemWidth + 32;
-        slider.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
+        var cWidth = slider.parentElement.offsetWidth - 140;
+        var itemWidth = (cWidth - 48) / 3;
+        var slideWidth = itemWidth + 24;
+        slider.style.transform = 'translateX(-' + (currentSlide * slideWidth) + 'px)';
     }
-    
     updateDots();
 }
 
-// Update gallery on resize
-let resizeTimer;
-window.addEventListener('resize', () => {
+var resizeTimer;
+window.addEventListener('resize', function() {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(updateGallery, 250);
 });
-
-// Initialize gallery
 updateGallery();
 
-// Mobile Menu
+// ── Mobile Menu ──────────────────────────────────────────────────
 function toggleMobileMenu() {
-    const navLinks = document.getElementById('navLinks');
+    var navLinks = document.getElementById('navLinks');
+    var toggle = document.querySelector('.mobile-menu-toggle');
     navLinks.classList.toggle('active');
+    toggle.classList.toggle('active');
 }
 
-document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
+document.querySelectorAll('.nav-links a').forEach(function(link) {
+    link.addEventListener('click', function() {
         document.getElementById('navLinks').classList.remove('active');
+        document.querySelector('.mobile-menu-toggle').classList.remove('active');
     });
 });
-
-// Header Scroll Effect
-let lastScroll = 0;
-window.addEventListener('scroll', () => {
-    const header = document.querySelector('header');
-    const currentScroll = window.pageYOffset;
-    
-    header.classList.toggle('scrolled', currentScroll > 50);
-    
-    // Scroll to top button
-    const scrollBtn = document.querySelector('.scroll-to-top');
-    scrollBtn.classList.toggle('visible', currentScroll > 300);
-    
-    lastScroll = currentScroll;
+// ── Header Scroll Effect ─────────────────────────────────────────
+window.addEventListener('scroll', function() {
+    var header = document.querySelector('header');
+    var scrollY = window.pageYOffset;
+    header.classList.toggle('scrolled', scrollY > 60);
+    var scrollBtn = document.querySelector('.scroll-to-top');
+    scrollBtn.classList.toggle('visible', scrollY > 400);
+    var waBtn = document.querySelector('.whatsapp-float');
+    if (waBtn) waBtn.classList.toggle('visible', scrollY > 400);
 });
 
-// Scroll to top function
+// ── Scroll Progress Bar ──────────────────────────────────────────
+var scrollProgressBar = document.getElementById('scrollProgress');
+window.addEventListener('scroll', function() {
+    var winScroll = document.documentElement.scrollTop;
+    var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    var scrolled = (winScroll / height) * 100;
+    scrollProgressBar.style.width = scrolled + '%';
+});
+
+// ── Scroll to Top ────────────────────────────────────────────────
 function scrollToTop() {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// Scroll Animation with Intersection Observer
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -100px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
+// ── Scroll Animations (Intersection Observer) ────────────────────
+var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
         if (entry.isIntersecting) {
             entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
         }
     });
-}, observerOptions);
+}, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
 
-document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right').forEach(el => {
+document.querySelectorAll('.fade-in').forEach(function(el) {
     observer.observe(el);
 });
-
-// Smooth Scroll
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
+// ── Smooth Scroll for Anchor Links ───────────────────────────────
+document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+    anchor.addEventListener('click', function(e) {
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
+        var target = document.querySelector(this.getAttribute('href'));
         if (target) {
-            const headerOffset = 80;
-            const elementPosition = target.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-            window.scrollTo({
-                top: offsetPosition,
-                behavior: 'smooth'
-            });
+            var headerOffset = 80;
+            var elementPosition = target.getBoundingClientRect().top;
+            var offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+            window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
         }
     });
 });
 
-// Parallax Effect
-window.addEventListener('scroll', () => {
-    const hero = document.querySelector('.hero');
-    const scrolled = window.pageYOffset;
-    if (hero && scrolled < window.innerHeight) {
-        hero.style.transform = `translateY(${scrolled * 0.5}px)`;
-    }
-});
-
-// Touch swipe for gallery
-let touchStartX = 0, touchEndX = 0;
-
-slider.addEventListener('touchstart', (e) => {
+// ── Touch Swipe for Gallery ──────────────────────────────────────
+var touchStartX = 0, touchEndX = 0;
+slider.addEventListener('touchstart', function(e) {
     touchStartX = e.changedTouches[0].screenX;
 }, { passive: true });
-
-slider.addEventListener('touchend', (e) => {
+slider.addEventListener('touchend', function(e) {
     touchEndX = e.changedTouches[0].screenX;
-    handleSwipe();
+    var diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > 50) moveGallery(diff > 0 ? 1 : -1);
 }, { passive: true });
 
-function handleSwipe() {
-    const swipeThreshold = 50;
-    if (touchEndX < touchStartX - swipeThreshold) {
-        moveGallery(1); // Swipe left
-    }
-    if (touchEndX > touchStartX + swipeThreshold) {
-        moveGallery(-1); // Swipe right
-    }
-}
-
-// Page load animation
-window.addEventListener('load', () => {
-    document.body.style.opacity = '0';
-    setTimeout(() => {
-        document.body.style.transition = 'opacity 0.5s';
-        document.body.style.opacity = '1';
-    }, 100);
-});
-
-// Add keyboard navigation for gallery
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft') {
-        moveGallery(-1);
-    } else if (e.key === 'ArrowRight') {
-        moveGallery(1);
+// ── Keyboard Navigation ──────────────────────────────────────────
+document.addEventListener('keydown', function(e) {
+    var lightbox = document.getElementById('lightbox');
+    var isLightboxOpen = lightbox && lightbox.classList.contains('active');
+    if (isLightboxOpen) {
+        if (e.key === 'ArrowLeft') changeLightboxImage(-1);
+        else if (e.key === 'ArrowRight') changeLightboxImage(1);
+        else if (e.key === 'Escape') closeLightbox();
+    } else {
+        if (e.key === 'ArrowLeft') moveGallery(-1);
+        else if (e.key === 'ArrowRight') moveGallery(1);
     }
 });
-
-console.log('🍊 OPG Oršulić website loaded successfully!');
-
-/* =================================================================
-   LIGHTBOX FUNCTIONALITY
-   ================================================================= */
-
-let currentLightboxIndex = 0;
-const lightboxImages = [
+// ── Lightbox ─────────────────────────────────────────────────────
+var currentLightboxIndex = 0;
+var lightboxImages = [
     { src: 'images/opg4.jpg', alt: 'Harvesting Mandarins' },
     { src: 'images/opg5.jpg', alt: 'Fresh Mandarin Harvest' },
     { src: 'images/opg6.jpg', alt: 'Mandarin Orchards' },
@@ -245,285 +187,74 @@ const lightboxImages = [
 
 function openLightbox(index) {
     currentLightboxIndex = index;
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightboxImg');
-    const caption = document.getElementById('lightboxCaption');
-    
+    var lightbox = document.getElementById('lightbox');
+    var lightboxImg = document.getElementById('lightboxImg');
+    var caption = document.getElementById('lightboxCaption');
     lightbox.classList.add('active');
     lightboxImg.src = lightboxImages[index].src;
     caption.textContent = lightboxImages[index].alt;
-    
-    // Prevent body scroll
     document.body.style.overflow = 'hidden';
 }
 
 function closeLightbox() {
-    const lightbox = document.getElementById('lightbox');
-    lightbox.classList.remove('active');
-    
-    // Restore body scroll
+    document.getElementById('lightbox').classList.remove('active');
     document.body.style.overflow = 'auto';
 }
 
 function changeLightboxImage(direction) {
     currentLightboxIndex += direction;
-    
-    if (currentLightboxIndex >= lightboxImages.length) {
-        currentLightboxIndex = 0;
-    } else if (currentLightboxIndex < 0) {
-        currentLightboxIndex = lightboxImages.length - 1;
-    }
-    
-    const lightboxImg = document.getElementById('lightboxImg');
-    const caption = document.getElementById('lightboxCaption');
-    
-    lightboxImg.src = lightboxImages[currentLightboxIndex].src;
-    caption.textContent = lightboxImages[currentLightboxIndex].alt;
+    if (currentLightboxIndex >= lightboxImages.length) currentLightboxIndex = 0;
+    else if (currentLightboxIndex < 0) currentLightboxIndex = lightboxImages.length - 1;
+    document.getElementById('lightboxImg').src = lightboxImages[currentLightboxIndex].src;
+    document.getElementById('lightboxCaption').textContent = lightboxImages[currentLightboxIndex].alt;
 }
+// ── WhatsApp Floating Button ─────────────────────────────────────
+(function() {
+    var btn = document.createElement('a');
+    btn.href = 'https://wa.me/385976017599';
+    btn.target = '_blank';
+    btn.className = 'whatsapp-float';
+    btn.innerHTML = '💬';
+    btn.title = 'Contact us on WhatsApp';
+    document.body.appendChild(btn);
+})();
 
-// Keyboard navigation for lightbox
-document.addEventListener('keydown', (e) => {
-    const lightbox = document.getElementById('lightbox');
-    if (lightbox && lightbox.classList.contains('active')) {
-        if (e.key === 'ArrowLeft') {
-            changeLightboxImage(-1);
-        } else if (e.key === 'ArrowRight') {
-            changeLightboxImage(1);
-        } else if (e.key === 'Escape') {
-            closeLightbox();
-        }
-    }
-});
-
-/* =================================================================
-   CUSTOM VIDEO PLAYER
-   ================================================================= */
-
-function playVideo(button) {
-    const container = button.closest('.video-container');
-    const video = container.querySelector('.custom-video');
-    const overlay = container.querySelector('.video-overlay');
-    
-    if (video.paused) {
-        video.play();
-        overlay.style.opacity = '0';
-        overlay.style.pointerEvents = 'none';
-        container.classList.add('playing');
-    } else {
-        video.pause();
-        overlay.style.opacity = '1';
-        overlay.style.pointerEvents = 'all';
-        container.classList.remove('playing');
-    }
-}
-
-// Auto hide overlay when video is playing
-document.querySelectorAll('.custom-video').forEach(video => {
-    video.addEventListener('play', function() {
-        const container = this.closest('.video-container');
-        const overlay = container.querySelector('.video-overlay');
-        overlay.style.opacity = '0';
-        overlay.style.pointerEvents = 'none';
-        container.classList.add('playing');
-    });
-    
-    video.addEventListener('pause', function() {
-        const container = this.closest('.video-container');
-        const overlay = container.querySelector('.video-overlay');
-        if (!this.ended) {
-            overlay.style.opacity = '1';
-            overlay.style.pointerEvents = 'all';
-            container.classList.remove('playing');
-        }
-    });
-    
-    video.addEventListener('ended', function() {
-        const container = this.closest('.video-container');
-        const overlay = container.querySelector('.video-overlay');
-        overlay.style.opacity = '1';
-        overlay.style.pointerEvents = 'all';
-        container.classList.remove('playing');
-    });
-});
-
-/* =================================================================
-   SCROLL PROGRESS INDICATOR
-   ================================================================= */
-
-function updateScrollProgress() {
-    const scrollProgress = document.createElement('div');
-    scrollProgress.className = 'scroll-progress';
-    document.body.prepend(scrollProgress);
-    
-    window.addEventListener('scroll', () => {
-        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        const scrolled = (winScroll / height) * 100;
-        scrollProgress.style.width = scrolled + '%';
-    });
-}
-
-// Initialize scroll progress
-updateScrollProgress();
-
-/* =================================================================
-   LAZY LOADING IMAGES (Enhanced)
-   ================================================================= */
-
+// ── Lazy Loading Images ──────────────────────────────────────────
 if ('IntersectionObserver' in window) {
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
+    var imageObserver = new IntersectionObserver(function(entries, obs) {
+        entries.forEach(function(entry) {
             if (entry.isIntersecting) {
-                const img = entry.target;
+                var img = entry.target;
                 if (img.dataset.src) {
                     img.src = img.dataset.src;
                     img.removeAttribute('data-src');
-                    img.classList.add('loaded');
                 }
-                observer.unobserve(img);
+                obs.unobserve(img);
             }
         });
-    }, {
-        rootMargin: '50px'
-    });
-
-    document.querySelectorAll('img[data-src]').forEach(img => {
+    }, { rootMargin: '100px' });
+    document.querySelectorAll('img[data-src]').forEach(function(img) {
         imageObserver.observe(img);
     });
 }
 
-/* =================================================================
-   WHATSAPP FLOATING BUTTON
-   ================================================================= */
-
-function createWhatsAppButton() {
-    const whatsappBtn = document.createElement('a');
-    whatsappBtn.href = 'https://wa.me/385976017599';
-    whatsappBtn.target = '_blank';
-    whatsappBtn.className = 'whatsapp-float';
-    whatsappBtn.innerHTML = '💬';
-    whatsappBtn.title = 'Contact us on WhatsApp';
-    document.body.appendChild(whatsappBtn);
-    
-    // Show button on scroll
-    window.addEventListener('scroll', () => {
-        if (window.pageYOffset > 300) {
-            whatsappBtn.style.display = 'flex';
-        } else {
-            whatsappBtn.style.display = 'none';
-        }
-    });
-}
-
-// Initialize WhatsApp button
-createWhatsAppButton();
-
-/* =================================================================
-   COUNTER ANIMATION (for statistics if needed)
-   ================================================================= */
-
-function animateCounter(element, target, duration = 2000) {
-    let start = 0;
-    const increment = target / (duration / 16);
-    
-    const timer = setInterval(() => {
-        start += increment;
-        if (start >= target) {
-            element.textContent = target;
-            clearInterval(timer);
-        } else {
-            element.textContent = Math.floor(start);
-        }
-    }, 16);
-}
-
-/* =================================================================
-   SMOOTH REVEAL ON SCROLL (Enhanced)
-   ================================================================= */
-
-const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('revealed');
-        }
-    });
-}, {
-    threshold: 0.15,
-    rootMargin: '0px 0px -100px 0px'
-});
-
-document.querySelectorAll('.reveal-on-scroll').forEach(el => {
-    revealObserver.observe(el);
-});
-
-/* =================================================================
-   COPY TO CLIPBOARD (for email/phone)
-   ================================================================= */
-
-function copyToClipboard(text, element) {
-    navigator.clipboard.writeText(text).then(() => {
-        const originalText = element.textContent;
-        element.textContent = currentLang === 'en' ? 'Copied!' : 'Kopirano!';
-        element.style.color = '#4caf50';
-        
-        setTimeout(() => {
-            element.textContent = originalText;
-            element.style.color = '';
-        }, 2000);
-    });
-}
-
-/* =================================================================
-   EASTER EGG - Konami Code
-   ================================================================= */
-
-let konamiCode = [];
-const konamiPattern = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
-
-document.addEventListener('keydown', (e) => {
+// ── Easter Egg (Konami Code) ─────────────────────────────────────
+var konamiCode = [];
+var konamiPattern = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+document.addEventListener('keydown', function(e) {
     konamiCode.push(e.key);
     konamiCode = konamiCode.slice(-konamiPattern.length);
-    
     if (konamiCode.join(',') === konamiPattern.join(',')) {
-        // Easter egg activated!
+        document.body.style.transition = 'transform 1s';
         document.body.style.transform = 'rotate(180deg)';
-        setTimeout(() => {
-            document.body.style.transform = 'rotate(0deg)';
-        }, 1000);
-        
-        // Show fun message
-        const msg = document.createElement('div');
-        msg.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#ff9800;color:white;padding:2rem;border-radius:20px;font-size:2rem;z-index:99999;';
+        setTimeout(function() { document.body.style.transform = 'rotate(0deg)'; }, 1000);
+        var msg = document.createElement('div');
+        msg.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#D4880F;color:white;padding:2rem 3rem;border-radius:16px;font-size:1.5rem;z-index:99999;box-shadow:0 20px 60px rgba(0,0,0,0.3);';
         msg.textContent = '🍊 Secret Mandarin Code Activated! 🍊';
         document.body.appendChild(msg);
-        setTimeout(() => msg.remove(), 3000);
+        setTimeout(function() { msg.remove(); }, 3000);
     }
 });
 
-/* =================================================================
-   PERFORMANCE MONITORING
-   ================================================================= */
-
-if (window.performance) {
-    window.addEventListener('load', () => {
-        const perfData = window.performance.timing;
-        const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
-        console.log(`🍊 Page loaded in ${pageLoadTime}ms`);
-    });
-}
-
-/* =================================================================
-   INITIALIZE ALL FEATURES ON LOAD
-   ================================================================= */
-
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('🍊 All enhanced features initialized!');
-    console.log('✅ Lightbox gallery');
-    console.log('✅ Custom video player');
-    console.log('✅ Scroll progress bar');
-    console.log('✅ WhatsApp floating button');
-    console.log('✅ Lazy loading images');
-    console.log('✅ Easter egg activated (try Konami code!)');
-});
-
-console.log('🍊 OPG Oršulić Enhanced Website v2.0!');
+console.log('🍊 OPG Oršulić Premium Website loaded!');
+console.log('✅ All features initialized');
