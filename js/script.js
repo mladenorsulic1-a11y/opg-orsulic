@@ -179,10 +179,15 @@ document.addEventListener('keydown', function(e) {
 // ── Lightbox ─────────────────────────────────────────────────────
 var currentLightboxIndex = 0;
 var lightboxImages = [
-    { src: 'images/opg4.jpg', alt: 'Harvesting Mandarins' },
-    { src: 'images/opg5.jpg', alt: 'Fresh Mandarin Harvest' },
-    { src: 'images/opg6.jpg', alt: 'Mandarin Orchards' },
-    { src: 'images/opg7.jpg', alt: 'Neretva Valley Farm' }
+    { src: 'images/duje.jpeg', alt: 'Duje na bazenu' },
+    { src: 'images/duje.jpeg', alt: 'Duje ponovo' },
+    { src: 'images/duje.jpeg', alt: 'Još jednom Duje' },
+    { src: 'images/duje.jpeg', alt: 'I opet Duje' },
+    { src: 'images/duje.jpeg', alt: 'Duje 5' },
+    { src: 'images/duje.jpeg', alt: 'Duje 6' },
+    { src: 'images/duje.jpeg', alt: 'Duje 7' },
+    { src: 'images/duje.jpeg', alt: 'Duje 8' },
+    { src: 'images/duje.jpeg', alt: 'Duje 9 - SVUGDJE!' }
 ];
 
 function openLightbox(index) {
